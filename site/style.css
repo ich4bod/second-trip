@@ -12,6 +12,7 @@ p { margin: 8px 0; }
 .card { min-width: 0; border: 1px solid #b7b3a9; border-radius: 10px; padding: 12px; }
 #map { display: block; width: 100%; height: auto; color: #b7b3a9; overflow: visible; }
 #map circle { fill: #303d4b; stroke: #b7b3a9; stroke-width: 2; }
+#map .roads line.closed { stroke: #d57460; stroke-dasharray: 6 4; }
 #map circle.current { stroke: #e7b455; stroke-width: 5; }
 #map text { fill: #fff2d3; font: 14px system-ui, sans-serif; text-anchor: middle; }
 #map .edge-labels text { fill: #e7b455; font-weight: 700; }

@@ -1,4 +1,4 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=arch1';
 
 let state = create();
 const history = [];
@@ -36,6 +36,10 @@ function render() {
     : `Pack: ${weight} / 6 weight. Heavy: roads cost twice as much fuel.`;
   byId('banked-value').textContent = `Safe at the gate: ${valueOf(state.banked)} treasure value.`;
   byId('trips').textContent = `Banked hauls: ${state.trips}.`;
+  byId('arch-note').textContent = state.trips === 0
+    ? 'The short arch stands until you bank your first haul.'
+    : 'The short arch has fallen. The Well road is still open.';
+  document.querySelector('[data-edge="hall-vault"]').classList.toggle('closed', state.trips >= 1);
   byId('result').textContent = state.status === 'stranded'
     ? 'The lantern went out away from the gate. Only banked treasure is safe. Undo a choice or start again.'
     : state.status === 'left'
@@ -51,8 +55,9 @@ function render() {
   for (const [a, b, baseCost] of edges) {
     const destination = a === state.room ? b : b === state.room ? a : null;
     if (!destination) continue;
+    const archClosed = state.trips >= 1 && ((state.room === 'hall' && destination === 'vault') || (state.room === 'vault' && destination === 'hall'));
     const cost = baseCost * (weight > 3 ? 2 : 1);
-    roadList.append(button(`move-${destination}`, `To ${names[destination]} · ${cost} fuel`, ended() || state.fuel < cost, () => save(act(state, { type: 'move', id: destination }))));
+    roadList.append(button(`move-${destination}`, archClosed ? `To ${names[destination]} · arch closed` : `To ${names[destination]} · ${cost} fuel`, ended() || archClosed || state.fuel < cost, () => save(act(state, { type: 'move', id: destination }))));
   }
 
   const floor = byId('floor');

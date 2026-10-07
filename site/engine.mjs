@@ -46,7 +46,7 @@ export function act(state, action) {
   switch (action.type) {
     case 'move': {
       const edge = edges.find(([a, b]) => (a === state.room && b === action.id) || (b === state.room && a === action.id));
-      if (!edge) return state;
+      if (!edge || (state.trips >= 1 && edge[0] === 'hall' && edge[1] === 'vault')) return state;
       const cost = edge[2] * (packWeight(state.pack) > 3 ? 2 : 1);
       if (state.fuel < cost) return state;
       next.room = action.id;
