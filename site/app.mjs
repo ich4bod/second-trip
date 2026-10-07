@@ -99,6 +99,12 @@ function render() {
     row.className = 'item-row';
     row.append(document.createTextNode(itemText(id)));
     row.append(button(`drop-${id}`, `Drop ${itemById[id].name}`, ended(), () => save(act(state, { type: 'drop', id }))));
+    const hypotheticalWeight = weight - itemById[id].weight;
+    const hypotheticalRoute = returnRoute(state, hypotheticalWeight);
+    const preview = document.createElement('p');
+    preview.id = `drop-preview-${id}`;
+    preview.textContent = `After dropping: ${hypotheticalWeight} weight · return ${hypotheticalRoute.cost} fuel.`;
+    row.append(preview);
     pack.append(row);
   }
 

@@ -24,6 +24,7 @@ button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outlin
 #gate-route-reader [hidden] { display: none !important; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .item-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: center; padding: 4px 0; }
+.item-row p { grid-column: 1 / -1; margin: 0; }
 .rules { margin: 18px 0; color: #b7b3a9; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding-top: 12px; border-top: 1px solid #303d4b; color: #b7b3a9; }
 a { color: #e7b455; }
