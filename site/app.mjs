@@ -6,6 +6,19 @@ const byId = id => document.getElementById(id);
 const names = Object.fromEntries(rooms.map(room => [room.id, room.name]));
 const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
+const returnRoute = (current, weight = packWeight(current.pack)) => {
+  const routes = {
+    gate: { rooms: ['gate'], baseCost: 0 },
+    hall: { rooms: ['hall', 'gate'], baseCost: 1 },
+    well: { rooms: ['well', 'hall', 'gate'], baseCost: 2 },
+    vault: current.trips >= 1
+      ? { rooms: ['vault', 'well', 'hall', 'gate'], baseCost: 4 }
+      : { rooms: ['vault', 'hall', 'gate'], baseCost: 2 },
+  };
+  const route = routes[current.room];
+  const cost = route.baseCost * (weight > 3 ? 2 : 1);
+  return { path: route.rooms.map(room => names[room]).join(' → '), cost, margin: current.fuel - cost };
+};
 const button = (id, text, disabled, handler) => {
   const element = document.createElement('button');
   element.type = 'button';
@@ -31,6 +44,11 @@ function render() {
   const weight = packWeight(state.pack);
   byId('where').textContent = `You are at ${names[state.room]}.`;
   byId('fuel').textContent = `Lantern: ${state.fuel} / 20 fuel.`;
+  const route = returnRoute(state, weight);
+  byId('gate-route').textContent = `${route.path} · ${route.cost} fuel with this pack.`;
+  byId('gate-margin').textContent = route.margin >= 0
+    ? `Fuel after reaching the gate: ${route.margin}.`
+    : `Short by ${-route.margin} fuel with this pack.`;
   byId('pack-weight').textContent = weight <= 3
     ? `Pack: ${weight} / 6 weight. Light: roads cost the marked fuel.`
     : `Pack: ${weight} / 6 weight. Heavy: roads cost twice as much fuel.`;

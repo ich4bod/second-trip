@@ -19,7 +19,9 @@ p { margin: 8px 0; }
 .button-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .utility { margin-top: 8px; }
 button { min-height: 44px; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; cursor: pointer; }
-button:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
+button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
+#gate-route-summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+#gate-route-reader [hidden] { display: none !important; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .item-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: center; padding: 4px 0; }
 .rules { margin: 18px 0; color: #b7b3a9; }
