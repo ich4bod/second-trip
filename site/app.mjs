@@ -2,10 +2,20 @@ import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.
 
 let state = create();
 const history = [];
+let exchangeDrop = null;
 const byId = id => document.getElementById(id);
 const names = Object.fromEntries(rooms.map(room => [room.id, room.name]));
 const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
+const canExchange = (current, dropId, takeId) => {
+  const drop = itemById[dropId];
+  const take = itemById[takeId];
+  return current.status === 'playing'
+    && current.pack.includes(dropId)
+    && current.ground[current.room]?.includes(takeId)
+    && !!drop && !!take
+    && packWeight(current.pack) - drop.weight + take.weight <= 6;
+};
 const returnRoute = (current, weight = packWeight(current.pack)) => {
   const routes = {
     gate: { rooms: ['gate'], baseCost: 0 },
@@ -69,6 +79,21 @@ function render() {
     node.classList.toggle('current', node.dataset.room === state.room);
   }
 
+  if (exchangeDrop !== null && !state.pack.includes(exchangeDrop)) exchangeDrop = null;
+  const exchangeSelect = byId('exchange-drop');
+  exchangeSelect.replaceChildren();
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = 'Choose one carried item';
+  exchangeSelect.append(placeholder);
+  for (const id of state.pack) {
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = itemById[id].name;
+    exchangeSelect.append(option);
+  }
+  exchangeSelect.value = exchangeDrop ?? '';
+  exchangeSelect.disabled = ended() || state.pack.length === 0;
   const roadList = byId('roads');
   roadList.replaceChildren();
   for (const [a, b, baseCost] of edges) {
@@ -88,9 +113,18 @@ function render() {
     row.className = 'item-row';
     row.append(document.createTextNode(itemText(id)));
     row.append(button(`take-${id}`, `Take ${itemById[id].name}`, ended() || weight + itemById[id].weight > 6, () => save(act(state, { type: 'take', id }))));
+    const trade = button(`exchange-${id}`, `Trade for ${itemById[id].name}`, !canExchange(state, exchangeDrop, id), () => {
+      if (!canExchange(state, exchangeDrop, id)) return;
+      const intermediate = act(state, { type: 'drop', id: exchangeDrop });
+      if (intermediate === state) return;
+      const next = act(intermediate, { type: 'take', id });
+      if (next === intermediate) return;
+      save(next);
+    });
+    trade.dataset.exchangeTake = id;
+    row.append(trade);
     floor.append(row);
   }
-
   const pack = byId('pack');
   pack.replaceChildren();
   if (state.pack.length === 0) pack.textContent = 'Your pack is empty.';
@@ -114,6 +148,12 @@ function render() {
   byId('restart').disabled = false;
 }
 
+byId('exchange-drop').addEventListener('change', () => {
+  exchangeDrop = byId('exchange-drop').value || null;
+  for (const tradeButton of document.querySelectorAll('#floor [data-exchange-take]')) {
+    tradeButton.disabled = !canExchange(state, exchangeDrop, tradeButton.dataset.exchangeTake);
+  }
+});
 byId('bank').addEventListener('click', () => save(act(state, { type: 'bank' })));
 byId('leave').addEventListener('click', () => save(act(state, { type: 'leave' })));
 byId('undo').addEventListener('click', () => {
@@ -124,6 +164,7 @@ byId('undo').addEventListener('click', () => {
 });
 byId('restart').addEventListener('click', () => {
   state = create();
+  exchangeDrop = null;
   history.length = 0;
   render();
 });

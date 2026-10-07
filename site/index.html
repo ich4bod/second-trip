@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=dropread1">
-  <script type="module" src="/app.mjs?v=dropread1"></script>
+  <link rel="stylesheet" href="/style.css?v=exchange1">
+  <script type="module" src="/app.mjs?v=exchange1"></script>
 </head>
 <body>
   <main>
@@ -52,7 +52,12 @@
         </section>
         <section class="card" aria-labelledby="floor-heading">
           <h2 id="floor-heading">On the floor</h2>
+          <label for="exchange-drop">Set down for a trade</label>
+          <select id="exchange-drop">
+            <option value="">Choose one carried item</option>
+          </select>
           <div id="floor"></div>
+          <p id="exchange-help">Set down one carried item and take this floor item in one choice. No fuel is spent. Undo reverses both parts.</p>
         </section>
         <section class="card" aria-labelledby="pack-heading">
           <h2 id="pack-heading">In your pack</h2>

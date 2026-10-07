@@ -18,7 +18,10 @@ p { margin: 8px 0; }
 #map .edge-labels text { fill: #e7b455; font-weight: 700; }
 .button-list { display: flex; flex-wrap: wrap; gap: 8px; }
 .utility { margin-top: 8px; }
-button { min-height: 44px; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; cursor: pointer; }
+button, select { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; }
+button { cursor: pointer; }
+#exchange-drop { display: block; width: 100%; margin: 4px 0 8px; }
+select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 #gate-route-summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
 #gate-route-reader [hidden] { display: none !important; }
