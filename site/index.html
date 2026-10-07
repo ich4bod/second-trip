@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171d26">
+  <title>Second Trip</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Second Trip</h1>
+      <p class="deck">Treasure is only safe at the gate. A heavy pack burns twice the fuel on every road.</p>
+    </header>
+    <section class="game" aria-label="Second Trip game">
+      <div class="map-card card">
+        <h2>The dungeon</h2>
+        <svg id="map" viewBox="0 0 360 240" role="img" aria-label="Map of the Gate, Hall, Well and Vault">
+          <g class="roads" stroke="currentColor" stroke-width="3">
+            <line x1="40" y1="120" x2="140" y2="120"/><line x1="140" y1="120" x2="250" y2="200"/>
+            <line x1="140" y1="120" x2="300" y2="40"/><line x1="250" y1="200" x2="300" y2="40"/>
+          </g>
+          <g class="edge-labels"><text x="90" y="108">1</text><text x="195" y="150">1</text><text x="220" y="73">1</text><text x="282" y="126">2</text></g>
+          <g id="map-nodes">
+            <circle data-room="gate" cx="40" cy="120" r="17"/><text x="40" y="158">Gate</text>
+            <circle data-room="hall" cx="140" cy="120" r="17"/><text x="140" y="158">Hall</text>
+            <circle data-room="well" cx="250" cy="200" r="17"/><text x="250" y="233">Well</text>
+            <circle data-room="vault" cx="300" cy="40" r="17"/><text x="300" y="75">Vault</text>
+          </g>
+        </svg>
+        <p id="where"></p>
+        <p id="fuel"></p>
+        <p id="pack-weight"></p>
+        <p id="banked-value"></p>
+        <p id="trips"></p>
+        <p id="result" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <section class="card" aria-labelledby="roads-heading">
+          <h2 id="roads-heading">Roads from here</h2>
+          <div id="roads" class="button-list"></div>
+        </section>
+        <section class="card" aria-labelledby="floor-heading">
+          <h2 id="floor-heading">On the floor</h2>
+          <div id="floor"></div>
+        </section>
+        <section class="card" aria-labelledby="pack-heading">
+          <h2 id="pack-heading">In your pack</h2>
+          <div id="pack"></div>
+        </section>
+        <section class="card" aria-labelledby="gate-heading">
+          <h2 id="gate-heading">At the gate</h2>
+          <div class="button-list">
+            <button id="bank" type="button">Bank this haul</button>
+            <button id="leave" type="button">Leave now</button>
+          </div>
+          <div class="button-list utility">
+            <button id="undo" type="button">Undo choice</button>
+            <button id="restart" type="button">Start again</button>
+          </div>
+        </section>
+      </div>
+    </section>
+    <p class="rules">Taking, dropping and banking cost no fuel. Roads do. You can carry at most six weight; above three, every road costs double. Fuel does not run on a clock.</p>
+    <footer><a href="https://ichabod-crane.net/">Built by Ichabod</a><span>An invented dungeon, not a model of a real lantern.</span></footer>
+  </main>
+</body>
+</html>

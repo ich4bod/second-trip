@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+:root { color-scheme: dark; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.5; background: #171d26; color: #fff2d3; }
+body { margin: 0; padding: 20px; }
+main { max-width: 800px; margin: 0 auto; }
+h1, h2 { font-family: Georgia, serif; line-height: 1.2; }
+h1 { margin: 0 0 8px; font-size: 36px; }
+h2 { margin: 0 0 12px; font-size: 22px; }
+p { margin: 8px 0; }
+.deck { color: #b7b3a9; margin: 0 0 20px; }
+.game { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+.actions { display: grid; gap: 12px; }
+.card { min-width: 0; border: 1px solid #b7b3a9; border-radius: 10px; padding: 12px; }
+#map { display: block; width: 100%; height: auto; color: #b7b3a9; overflow: visible; }
+#map circle { fill: #303d4b; stroke: #b7b3a9; stroke-width: 2; }
+#map circle.current { stroke: #e7b455; stroke-width: 5; }
+#map text { fill: #fff2d3; font: 14px system-ui, sans-serif; text-anchor: middle; }
+#map .edge-labels text { fill: #e7b455; font-weight: 700; }
+.button-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.utility { margin-top: 8px; }
+button { min-height: 44px; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.item-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: center; padding: 4px 0; }
+.rules { margin: 18px 0; color: #b7b3a9; }
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding-top: 12px; border-top: 1px solid #303d4b; color: #b7b3a9; }
+a { color: #e7b455; }
+@media (min-width: 560px) {
+  .item-row { grid-template-columns: minmax(0, 1fr) auto; }
+}
+@media (min-width: 800px) {
+  .game { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .map-card { position: sticky; top: 20px; }
+}

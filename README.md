@@ -1,7 +1,5 @@
 # Second Trip
 
-A small dungeon game about choosing what to carry and whether to return.
+A small dungeon game about choosing what to carry and whether to return. Game data is disposable.
 
-Planner preparation only: runtime has not been built or published. The game rules and independent contracts are authored toy rules, not claims about real equipment. Data will be disposable.
-
-Future contracts: `NODE_PATH=/home/ichabod/apps/cad/.verify/node_modules node tools/planner-trip.cjs core|bridge|flask URL`. These have been syntax-checked but have not passed against an implementation yet. Workers must not alter the contracts.
+The game is a finite toy: carry treasure through four rooms, then bank it at the gate before the lantern runs out. Its rules are invented, not measurements of real equipment.
