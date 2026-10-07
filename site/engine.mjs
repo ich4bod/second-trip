@@ -3,6 +3,7 @@ export const items = [
   { id: 'cup', name: 'Copper cup', room: 'well', weight: 2, value: 5 },
   { id: 'idol', name: 'Stone idol', room: 'vault', weight: 4, value: 12 },
   { id: 'ruby', name: 'Red ruby', room: 'vault', weight: 2, value: 7 },
+  { id: 'flask', name: 'Fuel flask', room: 'well', weight: 2, value: 0 },
 ];
 
 export const edges = [
@@ -29,7 +30,7 @@ export function create() {
     room: 'gate',
     fuel: 20,
     pack: [],
-    ground: { gate: [], hall: ['coin'], well: ['cup'], vault: ['idol', 'ruby'] },
+    ground: { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] },
     banked: [],
     trips: 0,
     status: 'playing',
@@ -68,8 +69,10 @@ export function act(state, action) {
     }
     case 'bank': {
       if (state.room !== 'gate' || state.pack.length === 0) return state;
-      next.banked.push(...next.pack);
+      const carriedFlask = next.pack.includes('flask');
+      next.banked.push(...next.pack.filter(id => id !== 'flask'));
       next.pack = [];
+      if (carriedFlask) next.fuel = Math.min(20, next.fuel + 8);
       next.trips += 1;
       return next;
     }

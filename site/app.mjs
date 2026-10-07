@@ -1,4 +1,4 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=arch1';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=flask1';
 
 let state = create();
 const history = [];
@@ -34,6 +34,7 @@ function render() {
   byId('pack-weight').textContent = weight <= 3
     ? `Pack: ${weight} / 6 weight. Light: roads cost the marked fuel.`
     : `Pack: ${weight} / 6 weight. Heavy: roads cost twice as much fuel.`;
+  byId('flask-help').textContent = 'The flask takes two weight. Bank it at the gate to add eight fuel, up to twenty. It is spent once; it is not treasure.';
   byId('banked-value').textContent = `Safe at the gate: ${valueOf(state.banked)} treasure value.`;
   byId('trips').textContent = `Banked hauls: ${state.trips}.`;
   byId('arch-note').textContent = state.trips === 0
