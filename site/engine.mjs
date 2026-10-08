@@ -46,6 +46,7 @@ function clone(state) {
 export function act(state, action) {
   if (!state || state.status !== 'playing' || !action) return state;
   if (action.type === 'unload' && !state.pack.some(id => id !== 'flask')) return state;
+  if (action.type === 'drink' && (!state.pack.includes('flask') || state.fuel >= 20)) return state;
   const next = clone(state);
   switch (action.type) {
     case 'move': {
@@ -69,6 +70,11 @@ export function act(state, action) {
       if (!state.pack.includes(action.id)) return state;
       next.pack.splice(next.pack.indexOf(action.id), 1);
       next.ground[state.room].push(action.id);
+      return next;
+    }
+    case 'drink': {
+      next.pack.splice(next.pack.indexOf('flask'), 1);
+      next.fuel = Math.min(20, next.fuel + 8);
       return next;
     }
     case 'unload': {

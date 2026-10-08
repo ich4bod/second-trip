@@ -1,4 +1,4 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=take-return1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=drink1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -80,7 +80,7 @@ function render() {
   byId('pack-weight').textContent = weight <= 3
     ? `Pack: ${weight} / 6 weight. Light: roads cost the marked fuel.`
     : `Pack: ${weight} / 6 weight. Heavy: roads cost twice as much fuel.`;
-  byId('flask-help').textContent = 'The flask takes two weight. Bank it at the gate to add eight fuel, up to twenty. It is spent once; it is not treasure.';
+  byId('flask-help').textContent = 'The flask takes two weight. Use it here or bank it at the gate to add eight fuel, up to twenty. It is spent once; it is not treasure.';
   byId('banked-value').textContent = `Safe at the gate: ${valueOf(state.banked)} treasure value.`;
   byId('trips').textContent = `Banked hauls: ${state.trips}.`;
   byId('passage-note').textContent = passageMode === 'narrow'
@@ -189,6 +189,15 @@ function render() {
     preview.id = `drop-preview-${id}`;
     preview.textContent = `After dropping: ${hypotheticalWeight} weight · return ${hypotheticalRoute.cost} fuel.`;
     row.append(preview);
+    if (id === 'flask') {
+      row.append(button('use-flask', 'Use the fuel flask', ended() || state.fuel >= 20, () => save(act(state, { type: 'drink' }))));
+      const nextFuel = Math.min(20, state.fuel + 8);
+      const addedFuel = nextFuel - state.fuel;
+      const flaskPreview = document.createElement('p');
+      flaskPreview.id = 'use-flask-preview';
+      flaskPreview.textContent = `Use flask: ${state.fuel} → ${nextFuel} fuel · ${addedFuel} fuel added · ${8 - addedFuel} fuel clipped.`;
+      row.append(flaskPreview);
+    }
     pack.append(row);
   }
 
