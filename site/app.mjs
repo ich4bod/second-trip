@@ -10,6 +10,11 @@ const byId = id => document.getElementById(id);
 const names = Object.fromEntries(rooms.map(room => [room.id, room.name]));
 const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
+const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
+const isKeptAttempt = () => !!kept
+  && JSON.stringify(state) === JSON.stringify(kept.state)
+  && startingFuel === kept.startingFuel
+  && passageMode === keptPassage(kept);
 const canExchange = (current, dropId, takeId) => {
   const drop = itemById[dropId];
   const take = itemById[takeId];
@@ -212,7 +217,7 @@ function render() {
   const forgetButton = byId('trip-forget');
   const keptInfo = byId('trip-kept-info');
   keepButton.disabled = false;
-  returnButton.disabled = !kept || (JSON.stringify(state) === JSON.stringify(kept.state) && startingFuel === kept.startingFuel);
+  returnButton.disabled = !kept || isKeptAttempt();
   forgetButton.disabled = !kept;
   keptInfo.textContent = kept
     ? `Kept: ${names[kept.state.room]} · ${kept.state.fuel} fuel · ${packWeight(kept.state.pack)} weight · ${valueOf(kept.state.banked)} safe value · arch ${kept.state.trips >= 1 ? 'fallen' : 'standing'}.`
@@ -260,10 +265,12 @@ byId('trip-keep').addEventListener('click', () => {
   render();
 });
 byId('trip-return').addEventListener('click', () => {
-  if (!kept || (JSON.stringify(state) === JSON.stringify(kept.state) && startingFuel === kept.startingFuel)) return;
+  if (!kept || isKeptAttempt()) return;
   state = structuredClone(kept.state);
   startingFuel = kept.startingFuel;
+  passageMode = keptPassage(kept);
   byId('starting-fuel').value = String(startingFuel);
+  byId('passage-mode').value = passageMode;
   exchangeDrop = null;
   history.length = 0;
   render();
