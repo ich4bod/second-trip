@@ -1,4 +1,4 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=bankone1';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=unload1';
 
 let startingFuel = 20;
 let state = create({ fuel: startingFuel });
@@ -162,6 +162,7 @@ function render() {
     pack.append(row);
   }
 
+  byId('unload-treasure').disabled = ended() || !state.pack.some(id => id !== 'flask');
   byId('bank').disabled = ended() || state.room !== 'gate' || state.pack.length === 0;
   byId('leave').disabled = ended() || state.room !== 'gate';
   byId('undo').disabled = history.length === 0;
@@ -179,6 +180,7 @@ byId('homeward-step').addEventListener('click', () => {
   if (!homeward.allowed) return;
   save(act(state, homeward.action));
 });
+byId('unload-treasure').addEventListener('click', () => save(act(state, { type: 'unload' })));
 byId('bank').addEventListener('click', () => save(act(state, { type: 'bank' })));
 byId('leave').addEventListener('click', () => save(act(state, { type: 'leave' })));
 byId('undo').addEventListener('click', () => {

@@ -44,6 +44,7 @@ function clone(state) {
 
 export function act(state, action) {
   if (!state || state.status !== 'playing' || !action) return state;
+  if (action.type === 'unload' && !state.pack.some(id => id !== 'flask')) return state;
   const next = clone(state);
   switch (action.type) {
     case 'move': {
@@ -66,6 +67,11 @@ export function act(state, action) {
       if (!state.pack.includes(action.id)) return state;
       next.pack.splice(next.pack.indexOf(action.id), 1);
       next.ground[state.room].push(action.id);
+      return next;
+    }
+    case 'unload': {
+      next.ground[state.room].push(...state.pack.filter(id => id !== 'flask'));
+      next.pack = state.pack.filter(id => id === 'flask');
       return next;
     }
     case 'bank-one': {
