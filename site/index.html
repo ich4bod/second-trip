@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=exchange1">
-  <script type="module" src="/app.mjs?v=exchange1"></script>
+  <link rel="stylesheet" href="/style.css?v=fuel1">
+  <script type="module" src="/app.mjs?v=fuel1"></script>
 </head>
 <body>
   <main>
@@ -14,6 +14,13 @@
       <h1>Second Trip</h1>
       <p class="deck">Treasure is only safe at the gate. A heavy pack burns twice the fuel on every road.</p>
     </header>
+    <label for="starting-fuel">Starting lantern</label>
+    <select id="starting-fuel" aria-describedby="starting-fuel-help">
+      <option value="8">8 fuel</option>
+      <option value="12">12 fuel</option>
+      <option value="20" selected>20 fuel</option>
+    </select>
+    <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
     <section class="game" aria-label="Second Trip game">
       <div class="map-card card">
         <h2>The dungeon</h2>

@@ -1,6 +1,7 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=flask1';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=fuel1';
 
-let state = create();
+let startingFuel = 20;
+let state = create({ fuel: startingFuel });
 const history = [];
 let exchangeDrop = null;
 const byId = id => document.getElementById(id);
@@ -162,10 +163,16 @@ byId('undo').addEventListener('click', () => {
     render();
   }
 });
-byId('restart').addEventListener('click', () => {
-  state = create();
+const restart = () => {
+  state = create({ fuel: startingFuel });
   exchangeDrop = null;
   history.length = 0;
   render();
+};
+byId('starting-fuel').addEventListener('change', () => {
+  const selected = Number(byId('starting-fuel').value);
+  startingFuel = [8, 12, 20].includes(selected) ? selected : 20;
+  restart();
 });
+byId('restart').addEventListener('click', restart);
 render();

@@ -25,10 +25,11 @@ const weightOf = id => items.find(item => item.id === id)?.weight ?? 0;
 const valueOf = ids => ids.reduce((total, id) => total + (items.find(item => item.id === id)?.value ?? 0), 0);
 const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 
-export function create() {
+export function create({ fuel = 20 } = {}) {
+  const startingFuel = [8, 12, 20].includes(fuel) ? fuel : 20;
   return {
     room: 'gate',
-    fuel: 20,
+    fuel: startingFuel,
     pack: [],
     ground: { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] },
     banked: [],
