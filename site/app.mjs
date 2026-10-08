@@ -1,4 +1,4 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=fuel1';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=bankone1';
 
 let startingFuel = 20;
 let state = create({ fuel: startingFuel });
@@ -150,6 +150,9 @@ function render() {
     row.className = 'item-row';
     row.append(document.createTextNode(itemText(id)));
     row.append(button(`drop-${id}`, `Drop ${itemById[id].name}`, ended(), () => save(act(state, { type: 'drop', id }))));
+    const bankOnly = button(`bank-only-${id}`, `Bank only ${itemById[id].name}`, ended(), () => save(act(state, { type: 'bank-one', id })));
+    bankOnly.hidden = state.room !== 'gate';
+    row.append(bankOnly);
     const hypotheticalWeight = weight - itemById[id].weight;
     const hypotheticalRoute = returnRoute(state, hypotheticalWeight);
     const preview = document.createElement('p');

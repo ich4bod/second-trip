@@ -68,6 +68,14 @@ export function act(state, action) {
       next.ground[state.room].push(action.id);
       return next;
     }
+    case 'bank-one': {
+      if (state.room !== 'gate' || !state.pack.includes(action.id)) return state;
+      next.pack.splice(next.pack.indexOf(action.id), 1);
+      if (action.id === 'flask') next.fuel = Math.min(20, next.fuel + 8);
+      else next.banked.push(action.id);
+      next.trips += 1;
+      return next;
+    }
     case 'bank': {
       if (state.room !== 'gate' || state.pack.length === 0) return state;
       const carriedFlask = next.pack.includes('flask');
