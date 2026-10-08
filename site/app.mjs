@@ -28,7 +28,18 @@ const returnRoute = (current, weight = packWeight(current.pack)) => {
   };
   const route = routes[current.room];
   const cost = route.baseCost * (weight > 3 ? 2 : 1);
-  return { path: route.rooms.map(room => names[room]).join(' → '), cost, margin: current.fuel - cost };
+  return { path: route.rooms.map(room => names[room]).join(' → '), destination: route.rooms[1], cost, margin: current.fuel - cost };
+};
+const homewardMove = current => {
+  const { destination } = returnRoute(current);
+  const edge = edges.find(([a, b]) => (a === current.room && b === destination) || (b === current.room && a === destination));
+  const action = { type: 'move', id: destination };
+  return {
+    destination,
+    cost: edge ? edge[2] * (packWeight(current.pack) > 3 ? 2 : 1) : 0,
+    action,
+    allowed: !!edge && act(current, action) !== current,
+  };
 };
 const button = (id, text, disabled, handler) => {
   const element = document.createElement('button');
@@ -60,6 +71,11 @@ function render() {
   byId('gate-margin').textContent = route.margin >= 0
     ? `Fuel after reaching the gate: ${route.margin}.`
     : `Short by ${-route.margin} fuel with this pack.`;
+  const homeward = homewardMove(state);
+  byId('homeward-step').textContent = homeward.destination
+    ? `Take the road to ${names[homeward.destination]} · ${homeward.cost} fuel`
+    : 'Already at the gate';
+  byId('homeward-step').disabled = !homeward.allowed;
   byId('pack-weight').textContent = weight <= 3
     ? `Pack: ${weight} / 6 weight. Light: roads cost the marked fuel.`
     : `Pack: ${weight} / 6 weight. Heavy: roads cost twice as much fuel.`;
@@ -154,6 +170,11 @@ byId('exchange-drop').addEventListener('change', () => {
   for (const tradeButton of document.querySelectorAll('#floor [data-exchange-take]')) {
     tradeButton.disabled = !canExchange(state, exchangeDrop, tradeButton.dataset.exchangeTake);
   }
+});
+byId('homeward-step').addEventListener('click', () => {
+  const homeward = homewardMove(state);
+  if (!homeward.allowed) return;
+  save(act(state, homeward.action));
 });
 byId('bank').addEventListener('click', () => save(act(state, { type: 'bank' })));
 byId('leave').addEventListener('click', () => save(act(state, { type: 'leave' })));
