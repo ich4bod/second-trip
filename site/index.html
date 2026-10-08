@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=take-return1">
-  <script type="module" src="/app.mjs?v=drink1"></script>
+  <link rel="stylesheet" href="/style.css?v=trip-memory1">
+  <script type="module" src="/app.mjs?v=trip-memory1"></script>
 </head>
 <body>
   <main>
@@ -99,6 +99,16 @@
             <button id="restart" type="button">Start again</button>
           </div>
         </section>
+        <details id="trip-memory">
+          <summary>Compare with one attempt</summary>
+          <div class="button-list">
+            <button id="trip-keep" type="button">Keep this attempt</button>
+            <button id="trip-return" type="button" disabled>Return to kept attempt</button>
+            <button id="trip-forget" type="button" disabled>Forget kept attempt</button>
+          </div>
+          <p id="trip-kept-info">No attempt kept.</p>
+          <p id="trip-keep-help">Return restores this whole attempt and its starting lantern. It clears the current Undo steps; it does not spend a road or bank treasure.</p>
+        </details>
       </div>
     </section>
     <p class="rules">Taking, dropping and banking cost no fuel. Roads do. You can carry at most six weight; above three, every road costs double. Fuel does not run on a clock. Banking your first haul closes the Hall–Vault arch in both directions. The other roads stay open. Undo can take you back before it fell.</p>

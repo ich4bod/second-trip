@@ -3,6 +3,7 @@ import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from 
 let startingFuel = 20;
 let passageMode = 'wide';
 let state = create({ fuel: startingFuel, passage: passageMode });
+let kept = null;
 const history = [];
 let exchangeDrop = null;
 const byId = id => document.getElementById(id);
@@ -206,6 +207,16 @@ function render() {
   byId('leave').disabled = ended() || state.room !== 'gate';
   byId('undo').disabled = history.length === 0;
   byId('restart').disabled = false;
+  const keepButton = byId('trip-keep');
+  const returnButton = byId('trip-return');
+  const forgetButton = byId('trip-forget');
+  const keptInfo = byId('trip-kept-info');
+  keepButton.disabled = false;
+  returnButton.disabled = !kept || (JSON.stringify(state) === JSON.stringify(kept.state) && startingFuel === kept.startingFuel);
+  forgetButton.disabled = !kept;
+  keptInfo.textContent = kept
+    ? `Kept: ${names[kept.state.room]} · ${kept.state.fuel} fuel · ${packWeight(kept.state.pack)} weight · ${valueOf(kept.state.banked)} safe value · arch ${kept.state.trips >= 1 ? 'fallen' : 'standing'}.`
+    : 'No attempt kept.';
 }
 
 byId('exchange-drop').addEventListener('change', () => {
@@ -244,4 +255,22 @@ byId('passage-mode').addEventListener('change', () => {
   restart();
 });
 byId('restart').addEventListener('click', restart);
+byId('trip-keep').addEventListener('click', () => {
+  kept = { state: structuredClone(state), startingFuel };
+  render();
+});
+byId('trip-return').addEventListener('click', () => {
+  if (!kept || (JSON.stringify(state) === JSON.stringify(kept.state) && startingFuel === kept.startingFuel)) return;
+  state = structuredClone(kept.state);
+  startingFuel = kept.startingFuel;
+  byId('starting-fuel').value = String(startingFuel);
+  exchangeDrop = null;
+  history.length = 0;
+  render();
+});
+byId('trip-forget').addEventListener('click', () => {
+  if (!kept) return;
+  kept = null;
+  render();
+});
 render();
