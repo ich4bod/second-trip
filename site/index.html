@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=passage1">
-  <script type="module" src="/app.mjs?v=passage1"></script>
+  <link rel="stylesheet" href="/style.css?v=take-return1">
+  <script type="module" src="/app.mjs?v=take-return1"></script>
 </head>
 <body>
   <main>
@@ -73,6 +73,11 @@
             <option value="">Choose one carried item</option>
           </select>
           <div id="floor"></div>
+          <details id="take-return-reader">
+            <summary>Taking something and getting home</summary>
+            <div id="take-return-list"></div>
+            <p id="take-return-help">These previews take one item, keep the resulting pack and collect nothing else on the way home. A carried flask refills only at the gate.</p>
+          </details>
           <p id="exchange-help">Set down one carried item and take this floor item in one choice. No fuel is spent. Undo reverses both parts.</p>
         </section>
         <section class="card" aria-labelledby="pack-heading">

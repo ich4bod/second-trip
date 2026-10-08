@@ -1,4 +1,4 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=passage1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=take-return1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -152,6 +152,25 @@ function render() {
     trade.dataset.exchangeTake = id;
     row.append(trade);
     floor.append(row);
+  }
+  const takeReturnList = byId('take-return-list');
+  takeReturnList.replaceChildren();
+  if (floorItems.length === 0) takeReturnList.textContent = 'Nothing here to carry.';
+  for (const id of floorItems) {
+    const item = itemById[id];
+    const hypotheticalWeight = weight + item.weight;
+    const preview = document.createElement('p');
+    preview.id = `take-return-${id}`;
+    if (hypotheticalWeight > capacity) {
+      preview.textContent = `${item.name} does not fit this pack.`;
+    } else {
+      const hypotheticalRoute = returnRoute(state, hypotheticalWeight);
+      const marginText = hypotheticalRoute.margin >= 0
+        ? `fuel after return ${hypotheticalRoute.margin}`
+        : `short by ${-hypotheticalRoute.margin} fuel`;
+      preview.textContent = `After taking ${item.name}: pack ${hypotheticalWeight} / ${capacity} · return ${hypotheticalRoute.cost} fuel · ${marginText}.`;
+    }
+    takeReturnList.append(preview);
   }
   const pack = byId('pack');
   pack.replaceChildren();
