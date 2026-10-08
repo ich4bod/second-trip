@@ -1,7 +1,8 @@
-import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=unload1';
+import { act, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=passage1';
 
 let startingFuel = 20;
-let state = create({ fuel: startingFuel });
+let passageMode = 'wide';
+let state = create({ fuel: startingFuel, passage: passageMode });
 const history = [];
 let exchangeDrop = null;
 const byId = id => document.getElementById(id);
@@ -22,7 +23,7 @@ const returnRoute = (current, weight = packWeight(current.pack)) => {
     gate: { rooms: ['gate'], baseCost: 0 },
     hall: { rooms: ['hall', 'gate'], baseCost: 1 },
     well: { rooms: ['well', 'hall', 'gate'], baseCost: 2 },
-    vault: current.trips >= 1
+    vault: current.trips >= 1 || (current.passage === 'narrow' && weight > 3)
       ? { rooms: ['vault', 'well', 'hall', 'gate'], baseCost: 4 }
       : { rooms: ['vault', 'hall', 'gate'], baseCost: 2 },
   };
@@ -82,6 +83,10 @@ function render() {
   byId('flask-help').textContent = 'The flask takes two weight. Bank it at the gate to add eight fuel, up to twenty. It is spent once; it is not treasure.';
   byId('banked-value').textContent = `Safe at the gate: ${valueOf(state.banked)} treasure value.`;
   byId('trips').textContent = `Banked hauls: ${state.trips}.`;
+  byId('passage-note').textContent = passageMode === 'narrow'
+    ? 'The low lintel accepts at most three pack weight.'
+    : 'The standing arch accepts any legal pack.';
+  document.querySelector('[data-edge="hall-vault"]').classList.toggle('narrow', passageMode === 'narrow');
   byId('arch-note').textContent = state.trips === 0
     ? 'The short arch stands until you bank your first haul.'
     : 'The short arch has fallen. The Well road is still open.';
@@ -116,9 +121,15 @@ function render() {
   for (const [a, b, baseCost] of edges) {
     const destination = a === state.room ? b : b === state.room ? a : null;
     if (!destination) continue;
-    const archClosed = state.trips >= 1 && ((state.room === 'hall' && destination === 'vault') || (state.room === 'vault' && destination === 'hall'));
+    const isArch = a === 'hall' && b === 'vault';
+    const archClosed = state.trips >= 1 && isArch;
+    const packBlocked = state.passage === 'narrow' && weight > 3 && isArch;
     const cost = baseCost * (weight > 3 ? 2 : 1);
-    roadList.append(button(`move-${destination}`, archClosed ? `To ${names[destination]} · arch closed` : `To ${names[destination]} · ${cost} fuel`, ended() || archClosed || state.fuel < cost, () => save(act(state, { type: 'move', id: destination }))));
+    const roadText = archClosed ? `To ${names[destination]} · arch closed`
+      : packBlocked ? `To ${names[destination]} · pack too heavy`
+        : `To ${names[destination]} · ${cost} fuel`;
+    const action = { type: 'move', id: destination };
+    roadList.append(button(`move-${destination}`, roadText, act(state, action) === state, () => save(act(state, action))));
   }
 
   const floor = byId('floor');
@@ -190,7 +201,7 @@ byId('undo').addEventListener('click', () => {
   }
 });
 const restart = () => {
-  state = create({ fuel: startingFuel });
+  state = create({ fuel: startingFuel, passage: passageMode });
   exchangeDrop = null;
   history.length = 0;
   render();
@@ -198,6 +209,10 @@ const restart = () => {
 byId('starting-fuel').addEventListener('change', () => {
   const selected = Number(byId('starting-fuel').value);
   startingFuel = [8, 12, 20].includes(selected) ? selected : 20;
+  restart();
+});
+byId('passage-mode').addEventListener('change', () => {
+  passageMode = byId('passage-mode').value === 'narrow' ? 'narrow' : 'wide';
   restart();
 });
 byId('restart').addEventListener('click', restart);

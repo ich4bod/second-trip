@@ -25,7 +25,7 @@ const weightOf = id => items.find(item => item.id === id)?.weight ?? 0;
 const valueOf = ids => ids.reduce((total, id) => total + (items.find(item => item.id === id)?.value ?? 0), 0);
 const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 
-export function create({ fuel = 20 } = {}) {
+export function create({ fuel = 20, passage = 'wide' } = {}) {
   const startingFuel = [8, 12, 20].includes(fuel) ? fuel : 20;
   return {
     room: 'gate',
@@ -35,6 +35,7 @@ export function create({ fuel = 20 } = {}) {
     banked: [],
     trips: 0,
     status: 'playing',
+    ...(passage === 'narrow' ? { passage: 'narrow' } : {}),
   };
 }
 
@@ -49,7 +50,8 @@ export function act(state, action) {
   switch (action.type) {
     case 'move': {
       const edge = edges.find(([a, b]) => (a === state.room && b === action.id) || (b === state.room && a === action.id));
-      if (!edge || (state.trips >= 1 && edge[0] === 'hall' && edge[1] === 'vault')) return state;
+      if (!edge || (edge[0] === 'hall' && edge[1] === 'vault'
+        && (state.trips >= 1 || (state.passage === 'narrow' && packWeight(state.pack) > 3)))) return state;
       const cost = edge[2] * (packWeight(state.pack) > 3 ? 2 : 1);
       if (state.fuel < cost) return state;
       next.room = action.id;

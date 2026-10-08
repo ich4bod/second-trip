@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=bankone1">
-  <script type="module" src="/app.mjs?v=unload1"></script>
+  <link rel="stylesheet" href="/style.css?v=passage1">
+  <script type="module" src="/app.mjs?v=passage1"></script>
 </head>
 <body>
   <main>
@@ -21,6 +21,12 @@
       <option value="20" selected>20 fuel</option>
     </select>
     <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
+    <label for="passage-mode">The short passage</label>
+    <select id="passage-mode" aria-describedby="passage-help">
+      <option value="wide" selected>Wide arch</option>
+      <option value="narrow">Low lintel</option>
+    </select>
+    <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
     <section class="game" aria-label="Second Trip game">
       <div class="map-card card">
         <h2>The dungeon</h2>
@@ -37,6 +43,7 @@
             <circle data-room="vault" cx="300" cy="40" r="17"/><text x="300" y="75">Vault</text>
           </g>
         </svg>
+        <p id="passage-note"></p>
         <p id="arch-note"></p>
         <p id="where"></p>
         <p id="fuel"></p>

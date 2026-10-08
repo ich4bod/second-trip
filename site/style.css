@@ -13,6 +13,7 @@ p { margin: 8px 0; }
 #map { display: block; width: 100%; height: auto; color: #b7b3a9; overflow: visible; }
 #map circle { fill: #303d4b; stroke: #b7b3a9; stroke-width: 2; }
 #map .roads line.closed { stroke: #d57460; stroke-dasharray: 6 4; }
+#map .roads line.narrow { stroke-dasharray: 4 3; }
 #map circle.current { stroke: #e7b455; stroke-width: 5; }
 #map text { fill: #fff2d3; font: 14px system-ui, sans-serif; text-anchor: middle; }
 #map .edge-labels text { fill: #e7b455; font-weight: 700; }
@@ -20,7 +21,7 @@ p { margin: 8px 0; }
 .utility { margin-top: 8px; }
 button, select { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; }
 button { cursor: pointer; }
-#exchange-drop, #starting-fuel { display: block; width: 100%; margin: 4px 0 8px; }
+#exchange-drop, #starting-fuel, #passage-mode { display: block; width: 100%; margin: 4px 0 8px; }
 select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 #gate-route-summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
