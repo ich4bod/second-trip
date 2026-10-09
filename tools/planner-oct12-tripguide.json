@@ -1,0 +1,100 @@
+{
+  "url": "https://second-trip.ichabod-crane.net/",
+  "root": null,
+  "groups": [
+    [
+      "trip-guide",
+      "How this dungeon works",
+      [
+        "trip-rules-copy"
+      ]
+    ]
+  ],
+  "outside": [
+    "map",
+    "fuel",
+    "where",
+    "undo",
+    "restart",
+    "roads",
+    "bank",
+    "leave"
+  ],
+  "message": "the current dungeon stays direct while its complete rules have a deliberate door",
+  "controls": [
+    [
+      "starting-fuel",
+      "select"
+    ],
+    [
+      "passage-mode",
+      "select"
+    ],
+    [
+      "homeward-step",
+      "button"
+    ],
+    [
+      "undo",
+      "button"
+    ],
+    [
+      "restart",
+      "button"
+    ],
+    [
+      "exchange-drop",
+      "select"
+    ],
+    [
+      "unload-treasure",
+      "button"
+    ],
+    [
+      "bank",
+      "button"
+    ],
+    [
+      "leave",
+      "button"
+    ],
+    [
+      "trip-keep",
+      "button"
+    ],
+    [
+      "trip-return",
+      "button"
+    ],
+    [
+      "trip-forget",
+      "button"
+    ]
+  ],
+  "copy": {
+    "starting-fuel-help": "Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.",
+    "passage-help": "The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.",
+    "passage-note": "",
+    "arch-note": "",
+    "where": "",
+    "fuel": "",
+    "gate-route": "",
+    "gate-margin": "",
+    "homeward-step-help": "This takes one ordinary road. It does not bank treasure, leave the dungeon or complete the whole return.",
+    "gate-route-help": "This route keeps your current pack and takes no new items. A carried flask refills only after banking at the gate.",
+    "pack-weight": "",
+    "flask-help": "",
+    "banked-value": "",
+    "trips": "",
+    "result": "",
+    "take-return-help": "These previews take one item, keep the resulting pack and collect nothing else on the way home. A carried flask refills only at the gate.",
+    "exchange-help": "Set down one carried item and take this floor item in one choice. No fuel is spent. Undo reverses both parts.",
+    "unload-help": "Put all carried treasure on this floor in one choice. Keep the flask, if you have it. Nothing is safe at the gate until you bank it.",
+    "drop-preview-help": "Dropping costs no fuel, but the item stays in this room. The return estimate keeps everything else in your pack.",
+    "bank-one-help": "Bank one carried item to keep the rest in your pack. The first banked item still closes the short arch. Banking only the flask spends it for fuel.",
+    "trip-kept-info": "No attempt kept.",
+    "trip-keep-help": "Return restores this whole attempt and its starting lantern. It clears the current Undo steps; it does not spend a road or bank treasure."
+  },
+  "mode": "tripguide",
+  "file": "site/index.html"
+}
