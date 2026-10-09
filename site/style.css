@@ -25,7 +25,11 @@ button { cursor: pointer; }
 select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 #gate-route-summary, #take-return-reader > summary, #trip-memory > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
-#gate-route-reader [hidden], #take-return-reader [hidden], #trip-memory [hidden] { display: none !important; }
+#gate-route-reader [hidden], #take-return-reader [hidden], #trip-memory [hidden], #trip-starting-choices [hidden] { display: none !important; }
+#trip-starting-choices { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
+#trip-starting-choices > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; font: 16px system-ui, sans-serif; }
+#trip-starting-choices > summary:focus { outline: 3px solid #e7b455; outline-offset: 3px; }
+.starting-choice-fields { display: grid; gap: 8px; }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .item-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: center; padding: 4px 0; }
 .item-row [hidden] { display: none !important; }

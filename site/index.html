@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=trip-memory1">
+  <link rel="stylesheet" href="/style.css?v=trip-startingdoor1">
   <script type="module" src="/app.mjs?v=trip-memory2"></script>
 </head>
 <body>
@@ -14,19 +14,28 @@
       <h1>Second Trip</h1>
       <p class="deck">Treasure is only safe at the gate. A heavy pack burns twice the fuel on every road.</p>
     </header>
-    <label for="starting-fuel">Starting lantern</label>
-    <select id="starting-fuel" aria-describedby="starting-fuel-help">
-      <option value="8">8 fuel</option>
-      <option value="12">12 fuel</option>
-      <option value="20" selected>20 fuel</option>
-    </select>
-    <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
-    <label for="passage-mode">The short passage</label>
-    <select id="passage-mode" aria-describedby="passage-help">
-      <option value="wide" selected>Wide arch</option>
-      <option value="narrow">Low lintel</option>
-    </select>
-    <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
+    <details id="trip-starting-choices">
+      <summary>Start a different expedition</summary>
+      <div class="starting-choice-fields">
+        <div>
+          <label for="starting-fuel">Starting lantern</label>
+          <select id="starting-fuel" aria-describedby="starting-fuel-help">
+            <option value="8">8 fuel</option>
+            <option value="12">12 fuel</option>
+            <option value="20" selected>20 fuel</option>
+          </select>
+          <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
+        </div>
+        <div>
+          <label for="passage-mode">The short passage</label>
+          <select id="passage-mode" aria-describedby="passage-help">
+            <option value="wide" selected>Wide arch</option>
+            <option value="narrow">Low lintel</option>
+          </select>
+          <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
+        </div>
+      </div>
+    </details>
     <section class="game" aria-label="Second Trip game">
       <div class="map-card card">
         <h2>The dungeon</h2>
