@@ -1,0 +1,148 @@
+{
+  "slug": "second-trip",
+  "controls": [
+    [
+      "starting-fuel",
+      "select"
+    ],
+    [
+      "passage-mode",
+      "select"
+    ],
+    [
+      "homeward-step",
+      "button"
+    ],
+    [
+      "move-hall",
+      "button"
+    ],
+    [
+      "exchange-drop",
+      "select"
+    ],
+    [
+      "unload-treasure",
+      "button"
+    ],
+    [
+      "bank",
+      "button"
+    ],
+    [
+      "leave",
+      "button"
+    ],
+    [
+      "undo",
+      "button"
+    ],
+    [
+      "restart",
+      "button"
+    ],
+    [
+      "trip-keep",
+      "button"
+    ],
+    [
+      "trip-return",
+      "button"
+    ],
+    [
+      "trip-forget",
+      "button"
+    ]
+  ],
+  "cases": [
+    {
+      "slug": "second-trip",
+      "lane": 15,
+      "name": "Second Trip",
+      "mode": "startingdoor",
+      "title": "Second Trip \u2014 Keep starting a new expedition separate from the current dungeon",
+      "depends": "nothing",
+      "message": "starting fuel and passage rules have a deliberate door without disguising a new-game choice as a current edit",
+      "groups": [
+        {
+          "id": "trip-starting-choices",
+          "summary": "Start a different expedition",
+          "members": [
+            "#starting-fuel",
+            "#starting-fuel-help",
+            "#passage-mode",
+            "#passage-help"
+          ]
+        }
+      ],
+      "outside": [
+        "#map",
+        "#roads",
+        "#undo",
+        "#restart"
+      ],
+      "copySelectors": [
+        "#starting-fuel-help",
+        "#passage-help"
+      ],
+      "steps": "Immediately after header and before section.game create closed details#trip-starting-choices. Move the two starting labels/selects and their two help paragraphs intact inside it, fuel block then passage block. Keep values8/12/20, default20 and wide/narrow defaultwide unchanged. No input/toggle handlers or new-game behavior changes. The current map, pack/fuel/result and roads stay outside and directly available. Preserve690 Return restoration of private modes and pickers.",
+      "palette": "background #171d26, cream #fff2d3, muted #b7b3a9, panel #303d4b, gold #e7b455; Georgia headings/system16",
+      "copy": [
+        [
+          "#starting-fuel-help",
+          "Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel."
+        ],
+        [
+          "#passage-help",
+          "The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul."
+        ]
+      ]
+    },
+    {
+      "slug": "second-trip",
+      "lane": 15,
+      "name": "Second Trip",
+      "mode": "historynearroads",
+      "title": "Second Trip \u2014 Put Undo beside the road instead of at the end of the dungeon",
+      "depends": "nothing",
+      "message": "a road choice can be reversed before scrolling past floor trades pack and banking",
+      "groups": [],
+      "orders": [
+        [
+          "#trip-choice-history",
+          "#roads-heading"
+        ],
+        [
+          "#undo",
+          "#restart"
+        ]
+      ],
+      "parents": [
+        [
+          "#undo",
+          "#trip-choice-history"
+        ],
+        [
+          "#restart",
+          "#trip-choice-history"
+        ]
+      ],
+      "copySelectors": [
+        "#homeward-step-help",
+        "#exchange-help"
+      ],
+      "steps": "Move the intact div.button-list.utility currently containing #undo and #restart out of the At the gate card. Give this same div id=trip-choice-history and put it as the first child of .actions, before the Roads from here section. Preserve Undo choice then Start again order, button types and handlers. Leave Bank this haul, Leave now and #bank-one-help at the gate, unchanged; do not move result/live status or floor/pack controls. No new words, shortcuts, automatic scrolling or duplicate history.",
+      "palette": "background #171d26, cream #fff2d3, muted #b7b3a9, panel #303d4b, gold #e7b455; Georgia headings/system16",
+      "copy": [
+        [
+          "#homeward-step-help",
+          "This takes one ordinary road. It does not bank treasure, leave the dungeon or complete the whole return."
+        ],
+        [
+          "#exchange-help",
+          "Set down one carried item and take this floor item in one choice. No fuel is spent. Undo reverses both parts."
+        ]
+      ]
+    }
+  ]
+}
