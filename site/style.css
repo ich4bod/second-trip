@@ -24,6 +24,9 @@ button { cursor: pointer; }
 select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 #gate-route-summary, #take-return-reader > summary, #trip-memory > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; }
+#trade-instructions, #pack-instructions, #bank-instructions { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
+#trade-instructions > summary, #pack-instructions > summary, #bank-instructions > summary { min-height: 45px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; cursor: pointer; font: 16px system-ui, sans-serif; }
+#trade-instructions > summary:focus-visible, #pack-instructions > summary:focus-visible, #bank-instructions > summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 #gate-route-reader [hidden], #take-return-reader [hidden], #trip-memory [hidden], #trip-starting-choices [hidden] { display: none !important; }
 #trip-starting-choices { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
 #trip-starting-choices > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; font: 16px system-ui, sans-serif; }
