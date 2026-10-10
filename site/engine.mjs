@@ -25,15 +25,23 @@ const weightOf = id => items.find(item => item.id === id)?.weight ?? 0;
 const valueOf = ids => ids.reduce((total, id) => total + (items.find(item => item.id === id)?.value ?? 0), 0);
 const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 
-export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask' } = {}) {
+export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', treasurePlaces = 'usual' } = {}) {
   const startingFuel = [8, 12, 20].includes(fuel) ? fuel : 20;
   const dryWell = wellSupply === 'dry';
+  const placement = treasurePlaces === 'near-idol' || treasurePlaces === 'split-vault' ? treasurePlaces : 'usual';
+  const ground = placement === 'near-idol'
+    ? { gate: [], hall: ['idol'], well: ['cup', 'flask'], vault: ['coin', 'ruby'] }
+    : placement === 'split-vault'
+      ? { gate: [], hall: ['coin', 'ruby'], well: ['cup', 'flask'], vault: ['idol'] }
+      : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
+  if (dryWell) ground.well = ground.well.filter(id => id !== 'flask');
   return {
     room: 'gate',
     fuel: startingFuel,
     pack: [],
-    ground: { gate: [], hall: ['coin'], well: dryWell ? ['cup'] : ['cup', 'flask'], vault: ['idol', 'ruby'] },
+    ground,
     ...(dryWell ? { wellSupply: 'dry' } : {}),
+    ...(placement !== 'usual' ? { treasurePlaces: placement } : {}),
     banked: [],
     trips: 0,
     status: 'playing',

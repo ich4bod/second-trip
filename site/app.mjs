@@ -1,9 +1,10 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=well-supply1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=treasure-places1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
 let wellSupply = 'flask';
-let state = create({ fuel: startingFuel, passage: passageMode, wellSupply });
+let treasurePlaces = 'usual';
+let state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces });
 let kept = null;
 const history = [];
 let exchangeDrop = null;
@@ -13,11 +14,13 @@ const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
 const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
 const attemptWellSupply = attempt => attempt?.wellSupply === 'dry' ? 'dry' : 'flask';
+const attemptTreasurePlaces = attempt => ['near-idol', 'split-vault'].includes(attempt?.treasurePlaces) ? attempt.treasurePlaces : 'usual';
 const isKeptAttempt = () => !!kept
   && JSON.stringify(state) === JSON.stringify(kept.state)
   && startingFuel === kept.startingFuel
   && passageMode === keptPassage(kept)
-  && wellSupply === attemptWellSupply(kept.state);
+  && wellSupply === attemptWellSupply(kept.state)
+  && treasurePlaces === attemptTreasurePlaces(kept.state);
 const canExchange = (current, dropId, takeId) => {
   const drop = itemById[dropId];
   const take = itemById[takeId];
@@ -114,6 +117,8 @@ function render() {
   byId('well-supply-note').textContent = currentWellSupply === 'dry'
     ? 'Well: no fuel flask.'
     : 'Well: one fuel flask.';
+  const currentTreasurePlaces = attemptTreasurePlaces(state);
+  byId('treasure-places').value = currentTreasurePlaces;
   document.querySelector('[data-edge="hall-vault"]').classList.toggle('narrow', passageMode === 'narrow');
   byId('arch-note').textContent = state.trips === 0
     ? 'The short arch stands until you bank your first haul.'
@@ -290,7 +295,7 @@ byId('undo').addEventListener('click', () => {
   }
 });
 const restart = () => {
-  state = create({ fuel: startingFuel, passage: passageMode, wellSupply });
+  state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces });
   exchangeDrop = null;
   history.length = 0;
   render();
@@ -308,6 +313,11 @@ byId('well-supply').addEventListener('change', () => {
   wellSupply = byId('well-supply').value === 'dry' ? 'dry' : 'flask';
   restart();
 });
+byId('treasure-places').addEventListener('change', () => {
+  const selected = byId('treasure-places').value;
+  treasurePlaces = ['near-idol', 'split-vault'].includes(selected) ? selected : 'usual';
+  restart();
+});
 byId('restart').addEventListener('click', restart);
 byId('trip-keep').addEventListener('click', () => {
   kept = { state: structuredClone(state), startingFuel };
@@ -319,9 +329,11 @@ byId('trip-return').addEventListener('click', () => {
   startingFuel = kept.startingFuel;
   passageMode = keptPassage(kept);
   wellSupply = attemptWellSupply(kept.state);
+  treasurePlaces = attemptTreasurePlaces(kept.state);
   byId('starting-fuel').value = String(startingFuel);
   byId('passage-mode').value = passageMode;
   byId('well-supply').value = wellSupply;
+  byId('treasure-places').value = treasurePlaces;
   exchangeDrop = null;
   history.length = 0;
   render();

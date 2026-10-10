@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=well-supply1">
-  <script type="module" src="/app.mjs?v=well-supply1"></script>
+  <link rel="stylesheet" href="/style.css?v=treasure-places1">
+  <script type="module" src="/app.mjs?v=treasure-places1"></script>
 </head>
 <body>
   <main>
@@ -41,6 +41,15 @@
             <option value="dry">No fuel flask</option>
           </select>
           <p id="well-supply-help">Start without the flask. Only the Well’s fuel supply changes; the treasure and roads stay the same.</p>
+        </div>
+        <div>
+          <label for="treasure-places">Treasure places</label>
+          <select id="treasure-places" aria-describedby="treasure-places-help">
+            <option value="usual" selected>Original places</option>
+            <option value="near-idol">The idol in the Hall</option>
+            <option value="split-vault">The ruby beside the coin</option>
+          </select>
+          <p id="treasure-places-help">Move the heavy idol near the gate, or bring the ruby into the Hall. Choosing starts a new attempt; item weights, values and roads do not change.</p>
         </div>
       </div>
     </details>
