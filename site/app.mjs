@@ -236,6 +236,10 @@ function render() {
   byId('unload-treasure').disabled = ended() || !state.pack.some(id => id !== 'flask');
   byId('bank').disabled = ended() || state.room !== 'gate' || state.pack.length === 0;
   byId('leave').disabled = ended() || state.room !== 'gate';
+  const leaveCandidate = act(state, { type: 'leave' });
+  const leavePreview = byId('leave-preview');
+  leavePreview.hidden = leaveCandidate === state;
+  leavePreview.textContent = `Leave now: ${valueOf(state.banked)} treasure value safe; ${valueOf(state.pack)} carried treasure value will not count.`;
   byId('undo').disabled = history.length === 0;
   byId('restart').disabled = false;
   const keepButton = byId('trip-keep');
