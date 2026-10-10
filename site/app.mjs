@@ -61,6 +61,20 @@ const itemText = id => {
   const item = itemById[id];
   return `${item.name} · weight ${item.weight} · value ${item.value}.`;
 };
+const exchangePreview = takeId => {
+  const drop = itemById[exchangeDrop];
+  const take = itemById[takeId];
+  if (!drop || !take || !state.pack.includes(exchangeDrop) || !state.ground[state.room]?.includes(takeId)) {
+    return 'Choose a carried item to preview this trade.';
+  }
+  const hypotheticalWeight = packWeight(state.pack) - drop.weight + take.weight;
+  if (hypotheticalWeight > capacity) return 'This trade does not fit the pack.';
+  const route = returnRoute(state, hypotheticalWeight);
+  const marginText = route.margin >= 0
+    ? `fuel after return ${route.margin}`
+    : `short by ${-route.margin} fuel`;
+  return `Trade ${drop.name} for ${take.name}: pack ${hypotheticalWeight} / ${capacity} · return ${route.cost} fuel · ${marginText}.`;
+};
 const save = next => {
   if (next === state) return;
   history.push(structuredClone(state));
@@ -157,6 +171,10 @@ function render() {
     });
     trade.dataset.exchangeTake = id;
     row.append(trade);
+    const exchangeReturn = document.createElement('p');
+    exchangeReturn.id = `exchange-return-${id}`;
+    exchangeReturn.textContent = exchangePreview(id);
+    row.append(exchangeReturn);
     floor.append(row);
   }
   const takeReturnList = byId('take-return-list');
@@ -227,7 +245,9 @@ function render() {
 byId('exchange-drop').addEventListener('change', () => {
   exchangeDrop = byId('exchange-drop').value || null;
   for (const tradeButton of document.querySelectorAll('#floor [data-exchange-take]')) {
-    tradeButton.disabled = !canExchange(state, exchangeDrop, tradeButton.dataset.exchangeTake);
+    const takeId = tradeButton.dataset.exchangeTake;
+    tradeButton.disabled = !canExchange(state, exchangeDrop, takeId);
+    byId(`exchange-return-${takeId}`).textContent = exchangePreview(takeId);
   }
 });
 byId('homeward-step').addEventListener('click', () => {

@@ -18,12 +18,12 @@ p { margin: 8px 0; }
 #map text { fill: #fff2d3; font: 14px system-ui, sans-serif; text-anchor: middle; }
 #map .edge-labels text { fill: #e7b455; font-weight: 700; }
 .button-list { display: flex; flex-wrap: wrap; gap: 8px; }
-button, select { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; }
+button, select { min-height: 45px; max-width: 100%; padding: 8px 12px; border: 1px solid #e7b455; border-radius: 6px; background: #303d4b; color: #fff2d3; font: inherit; }
 button { cursor: pointer; }
 #exchange-drop, #starting-fuel, #passage-mode { display: block; width: 100%; margin: 4px 0 8px; }
 select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 button:focus-visible, summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
-#gate-route-summary, #take-return-reader > summary, #trip-memory > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; }
+#gate-route-summary, #take-return-reader > summary, #trip-memory > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; }
 #gate-route-reader [hidden], #take-return-reader [hidden], #trip-memory [hidden], #trip-starting-choices [hidden] { display: none !important; }
 #trip-starting-choices { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
 #trip-starting-choices > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; font: 16px system-ui, sans-serif; }
