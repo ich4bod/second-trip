@@ -35,6 +35,9 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .item-row [id^="bank-only-"] { grid-column: 1 / -1; }
 .item-row p { grid-column: 1 / -1; margin: 0; }
 .rules { margin: 18px 0; color: #b7b3a9; }
+#trip-guide { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
+#trip-guide > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; font: 16px system-ui, sans-serif; }
+#trip-guide > summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding-top: 12px; border-top: 1px solid #303d4b; color: #b7b3a9; }
 a { color: #e7b455; }
 @media (min-width: 560px) {
