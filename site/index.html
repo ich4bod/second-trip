@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=trip-trade-preview2">
-  <script type="module" src="/app.mjs?v=leave-preview1"></script>
+  <link rel="stylesheet" href="/style.css?v=well-supply1">
+  <script type="module" src="/app.mjs?v=well-supply1"></script>
 </head>
 <body>
   <main>
@@ -34,6 +34,14 @@
           </select>
           <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
         </div>
+        <div>
+          <label for="well-supply">Fuel in the Well</label>
+          <select id="well-supply" aria-describedby="well-supply-help">
+            <option value="flask" selected>One fuel flask</option>
+            <option value="dry">No fuel flask</option>
+          </select>
+          <p id="well-supply-help">Start without the flask. Only the Well’s fuel supply changes; the treasure and roads stay the same.</p>
+        </div>
       </div>
     </details>
     <section class="game" aria-label="Second Trip game">
@@ -53,6 +61,7 @@
           </g>
         </svg>
         <p id="passage-note"></p>
+        <p id="well-supply-note"></p>
         <p id="arch-note"></p>
         <p id="where"></p>
         <p id="fuel"></p>
@@ -129,6 +138,7 @@
             <button id="trip-forget" type="button" disabled>Forget kept attempt</button>
           </div>
           <p id="trip-kept-info">No attempt kept.</p>
+          <p id="trip-kept-supply" hidden></p>
           <p id="trip-keep-help">Return restores this whole attempt and its starting lantern. It clears the current Undo steps; it does not spend a road or bank treasure.</p>
         </details>
       </div>

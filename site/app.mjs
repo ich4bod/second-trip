@@ -1,8 +1,9 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=drink1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=well-supply1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
-let state = create({ fuel: startingFuel, passage: passageMode });
+let wellSupply = 'flask';
+let state = create({ fuel: startingFuel, passage: passageMode, wellSupply });
 let kept = null;
 const history = [];
 let exchangeDrop = null;
@@ -11,10 +12,12 @@ const names = Object.fromEntries(rooms.map(room => [room.id, room.name]));
 const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
 const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
+const attemptWellSupply = attempt => attempt?.wellSupply === 'dry' ? 'dry' : 'flask';
 const isKeptAttempt = () => !!kept
   && JSON.stringify(state) === JSON.stringify(kept.state)
   && startingFuel === kept.startingFuel
-  && passageMode === keptPassage(kept);
+  && passageMode === keptPassage(kept)
+  && wellSupply === attemptWellSupply(kept.state);
 const canExchange = (current, dropId, takeId) => {
   const drop = itemById[dropId];
   const take = itemById[takeId];
@@ -106,6 +109,11 @@ function render() {
   byId('passage-note').textContent = passageMode === 'narrow'
     ? 'The low lintel accepts at most three pack weight.'
     : 'The standing arch accepts any legal pack.';
+  const currentWellSupply = attemptWellSupply(state);
+  byId('well-supply').value = currentWellSupply;
+  byId('well-supply-note').textContent = currentWellSupply === 'dry'
+    ? 'Well: no fuel flask.'
+    : 'Well: one fuel flask.';
   document.querySelector('[data-edge="hall-vault"]').classList.toggle('narrow', passageMode === 'narrow');
   byId('arch-note').textContent = state.trips === 0
     ? 'The short arch stands until you bank your first haul.'
@@ -252,6 +260,11 @@ function render() {
   keptInfo.textContent = kept
     ? `Kept: ${names[kept.state.room]} · ${kept.state.fuel} fuel · ${packWeight(kept.state.pack)} weight · ${valueOf(kept.state.banked)} safe value · arch ${kept.state.trips >= 1 ? 'fallen' : 'standing'}.`
     : 'No attempt kept.';
+  const keptSupplyNote = byId('trip-kept-supply');
+  keptSupplyNote.hidden = !kept;
+  keptSupplyNote.textContent = kept
+    ? `Kept Well: ${attemptWellSupply(kept.state) === 'dry' ? 'no fuel flask' : 'one fuel flask'}.`
+    : '';
 }
 
 byId('exchange-drop').addEventListener('change', () => {
@@ -277,7 +290,7 @@ byId('undo').addEventListener('click', () => {
   }
 });
 const restart = () => {
-  state = create({ fuel: startingFuel, passage: passageMode });
+  state = create({ fuel: startingFuel, passage: passageMode, wellSupply });
   exchangeDrop = null;
   history.length = 0;
   render();
@@ -291,6 +304,10 @@ byId('passage-mode').addEventListener('change', () => {
   passageMode = byId('passage-mode').value === 'narrow' ? 'narrow' : 'wide';
   restart();
 });
+byId('well-supply').addEventListener('change', () => {
+  wellSupply = byId('well-supply').value === 'dry' ? 'dry' : 'flask';
+  restart();
+});
 byId('restart').addEventListener('click', restart);
 byId('trip-keep').addEventListener('click', () => {
   kept = { state: structuredClone(state), startingFuel };
@@ -301,8 +318,10 @@ byId('trip-return').addEventListener('click', () => {
   state = structuredClone(kept.state);
   startingFuel = kept.startingFuel;
   passageMode = keptPassage(kept);
+  wellSupply = attemptWellSupply(kept.state);
   byId('starting-fuel').value = String(startingFuel);
   byId('passage-mode').value = passageMode;
+  byId('well-supply').value = wellSupply;
   exchangeDrop = null;
   history.length = 0;
   render();
