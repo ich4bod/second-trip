@@ -207,6 +207,14 @@ function render() {
     const bankOnly = button(`bank-only-${id}`, `Bank only ${itemById[id].name}`, ended(), () => save(act(state, { type: 'bank-one', id })));
     bankOnly.hidden = state.room !== 'gate';
     row.append(bankOnly);
+    const bankCandidate = act(state, { type: 'bank-one', id });
+    const bankPreview = document.createElement('p');
+    bankPreview.id = `bank-item-preview-${id}`;
+    bankPreview.hidden = bankCandidate === state;
+    if (bankCandidate !== state) {
+      bankPreview.textContent = `After banking ${itemById[id].name}: safe ${valueOf(bankCandidate.banked)} · pack ${packWeight(bankCandidate.pack)} / ${capacity} · lantern ${bankCandidate.fuel} / 20 · arch ${bankCandidate.trips >= 1 ? 'fallen' : 'standing'}.`;
+    }
+    row.append(bankPreview);
     const hypotheticalWeight = weight - itemById[id].weight;
     const hypotheticalRoute = returnRoute(state, hypotheticalWeight);
     const preview = document.createElement('p');
