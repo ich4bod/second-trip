@@ -248,6 +248,15 @@ function render() {
       flaskPreview.id = 'use-flask-preview';
       flaskPreview.textContent = `Use flask: ${state.fuel} → ${nextFuel} fuel · ${addedFuel} fuel added · ${8 - addedFuel} fuel clipped.`;
       row.append(flaskPreview);
+      const afterWeight = weight - itemById.flask.weight;
+      const weightPreview = document.createElement('p');
+      weightPreview.id = 'use-flask-weight-preview';
+      weightPreview.textContent = `Pack weight: ${weight} → ${afterWeight}. Road multiplier: ${weight > 3 ? 2 : 1}× → ${afterWeight > 3 ? 2 : 1}×.`;
+      row.append(weightPreview);
+      const weightHelp = document.createElement('p');
+      weightHelp.id = 'use-flask-weight-help';
+      weightHelp.textContent = 'The flask leaves the pack when used. Roads double only while the pack weighs more than three; drinking does not reopen the arch or bank treasure.';
+      row.append(weightHelp);
     }
     pack.append(row);
   }
