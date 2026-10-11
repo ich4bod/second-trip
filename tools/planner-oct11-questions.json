@@ -1,0 +1,35 @@
+{
+  "slug": "second-trip",
+  "lane": 15,
+  "title": "Second Trip \u2014 Ask why a worthless flask can cost a valuable road",
+  "id": "three-questions-second-trip",
+  "summary": "Try three questions before the second trip",
+  "lead": "Nothing burns while you read. Fuel is spent on roads, and treasure counts only when you bank it at the gate.",
+  "questions": [
+    {
+      "title": "Can an item with no treasure value make the walk dearer?",
+      "prompt": "Carry the Silver coin and Fuel flask: together they weigh three. Add the Copper cup, then inspect a road before taking it.",
+      "answer": "Yes. The coin weighs one, the flask two and the cup two. The pack rises from three to five weight. Above three, every road costs double; the flask has zero treasure value but still has weight. The pack limit is six."
+    },
+    {
+      "title": "Does putting the flask down use its fuel?",
+      "prompt": "With a flask in the pack, press Put the whole pack down. Compare the lantern with the new floor items, then use Undo.",
+      "answer": "No. The whole pack moves to the current floor in order, including the unspent flask. There is no drinking, refill or banking. Taking an item back still uses the ordinary pack limit. Undo restores the whole press, not just the last item."
+    },
+    {
+      "title": "Does the first banked coin leave the return road unchanged?",
+      "prompt": "Return to the gate with the Silver coin and bank it. Before departing again, inspect the Hall\u2013Vault arch.",
+      "answer": "The first banked haul closes that arch in both directions. The other roads stay open. This makes a second trip a different route decision rather than a replay with a fresh lantern. Undo can return to before the banking; walking back alone does not reopen the arch."
+    }
+  ],
+  "facts": "Items coinweight1value1,flaskweight2value0,cupweight2value5; capacity6 costmultiplier2 ifpackWeight>3; bankingfirsthaul closesarch. drop-all preservesfuel andgroundorder. Fuelnotclock.",
+  "palette": "#171d26/#fff2d3/#b7b3a9/#e7b455",
+  "files": [
+    "site/index.html",
+    "site/style.css"
+  ],
+  "root": "main",
+  "anchor": "footer",
+  "url": "https://second-trip.ichabod-crane.net/",
+  "message": "three authored second-trip questions stay optional and leave the live experiment alone"
+}
