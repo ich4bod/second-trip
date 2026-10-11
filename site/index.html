@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
   <link rel="stylesheet" href="/style.css?v=arch-start1">
-  <script type="module" src="/app.mjs?v=arch-start1"></script>
+  <script type="module" src="/app.mjs?v=shortlantern1"></script>
 </head>
 <body>
   <main>
@@ -20,8 +20,10 @@
         <div>
           <label for="starting-fuel">Starting lantern</label>
           <select id="starting-fuel" aria-describedby="starting-fuel-help">
+            <option value="6">6 fuel</option>
             <option value="8">8 fuel</option>
             <option value="12">12 fuel</option>
+            <option value="16">16 fuel</option>
             <option value="20" selected>20 fuel</option>
           </select>
           <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>

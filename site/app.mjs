@@ -1,4 +1,4 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=arch-start1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=shortlantern1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -308,7 +308,7 @@ const restart = () => {
 };
 byId('starting-fuel').addEventListener('change', () => {
   const selected = Number(byId('starting-fuel').value);
-  startingFuel = [8, 12, 20].includes(selected) ? selected : 20;
+  startingFuel = [6, 8, 12, 16, 20].includes(selected) ? selected : 20;
   restart();
 });
 byId('passage-mode').addEventListener('change', () => {

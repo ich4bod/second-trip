@@ -26,7 +26,7 @@ const valueOf = ids => ids.reduce((total, id) => total + (items.find(item => ite
 const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 
 export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', treasurePlaces = 'usual', archStart = 'standing' } = {}) {
-  const startingFuel = [8, 12, 20].includes(fuel) ? fuel : 20;
+  const startingFuel = [6, 8, 12, 16, 20].includes(fuel) ? fuel : 20;
   const startingArch = archStart === 'fallen' ? 'fallen' : 'standing';
   const dryWell = wellSupply === 'dry';
   const placement = treasurePlaces === 'near-idol' || treasurePlaces === 'split-vault' ? treasurePlaces : 'usual';
