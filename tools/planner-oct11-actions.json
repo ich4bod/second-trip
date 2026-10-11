@@ -1,0 +1,12 @@
+{
+  "fallenarch": {
+    "lane": 15,
+    "depends": "nothing",
+    "title": "Second Trip \u2014 Begin with the short arch already fallen",
+    "message": "a fallen starting arch removes only the shortcut and kept Return restores that starting condition",
+    "buttons": [],
+    "copy": {
+      "arch-start-help": "Begin with the short arch already fallen. The Well road, treasures, fuel and prices stay the same. Choosing starts a new attempt; no haul is counted as banked."
+    }
+  }
+}
