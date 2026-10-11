@@ -1,0 +1,10 @@
+{
+  "shortlantern": {
+    "lane": 15,
+    "depends": "nothing",
+    "title": "Second Trip \u2014 Try a six-fuel first haul or a sixteen-fuel expedition",
+    "message": "six and sixteen fuel starts preserve exact road prices and kept lantern restoration",
+    "buttons": [],
+    "copy": {}
+  }
+}
