@@ -1,0 +1,12 @@
+{
+  "dropall": {
+    "copy": {
+      "drop-whole-pack": "Put the whole pack down",
+      "drop-whole-pack-help": "Put every carried item on this floor, including an unspent flask. No fuel or treasure is banked. Taking things back still uses the ordinary pack limit; Undo restores the whole press."
+    },
+    "buttons": [
+      "drop-whole-pack"
+    ],
+    "message": "dropall preserves unrelated state and answers its supplied native experiment"
+  }
+}
