@@ -43,6 +43,39 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 #trip-guide { border: 1px solid #b7b3a9; border-radius: 8px; padding: 12px; background: #303d4b; }
 #trip-guide > summary { min-height: 45px; display: flex; align-items: center; cursor: pointer; font: 16px system-ui, sans-serif; }
 #trip-guide > summary:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }
+#three-questions-second-trip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border: 1px solid #e7b455;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 16px 0;
+}
+#three-questions-second-trip > summary,
+#three-questions-second-trip section > details > summary {
+  box-sizing: border-box;
+  min-height: 45px;
+  max-width: 100%;
+  padding: 8px;
+  overflow-wrap: anywhere;
+}
+#three-questions-second-trip > summary:focus-visible,
+#three-questions-second-trip section > details > summary:focus-visible {
+  outline: 3px solid #e7b455;
+  outline-offset: 3px;
+}
+#three-questions-second-trip h3 {
+  font: bold 18px/1.35 system-ui, sans-serif;
+}
+#three-questions-second-trip p { margin: 8px 0; }
+#three-questions-second-trip section { margin: 16px 0; }
+#three-questions-second-trip section > details {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border: 1px solid #b7b3a9;
+  border-radius: 6px;
+  padding: 8px;
+}
 footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding-top: 12px; border-top: 1px solid #303d4b; color: #b7b3a9; }
 a { color: #e7b455; }
 @media (min-width: 560px) {

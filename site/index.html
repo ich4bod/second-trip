@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=dropall1">
+  <link rel="stylesheet" href="/style.css?v=threequestions1">
   <script type="module" src="/app.mjs?v=dropall1"></script>
 </head>
 <body>
@@ -167,6 +167,34 @@
     <details id="trip-guide">
       <summary>How this dungeon works</summary>
       <p class="rules" id="trip-rules-copy">Taking, dropping and banking cost no fuel. Roads do. You can carry at most six weight; above three, every road costs double. Fuel does not run on a clock. Banking your first haul closes the Hall–Vault arch in both directions. The other roads stay open. Undo can take you back before it fell.</p>
+    </details>
+    <details id="three-questions-second-trip">
+      <summary>Try three questions before the second trip</summary>
+      <p>Nothing burns while you read. Fuel is spent on roads, and treasure counts only when you bank it at the gate.</p>
+      <section>
+        <h3>Can an item with no treasure value make the walk dearer?</h3>
+        <p>Carry the Silver coin and Fuel flask: together they weigh three. Add the Copper cup, then inspect a road before taking it.</p>
+        <details>
+          <summary>Read an answer</summary>
+          <p>Yes. The coin weighs one, the flask two and the cup two. The pack rises from three to five weight. Above three, every road costs double; the flask has zero treasure value but still has weight. The pack limit is six.</p>
+        </details>
+      </section>
+      <section>
+        <h3>Does putting the flask down use its fuel?</h3>
+        <p>With a flask in the pack, press Put the whole pack down. Compare the lantern with the new floor items, then use Undo.</p>
+        <details>
+          <summary>Read an answer</summary>
+          <p>No. The whole pack moves to the current floor in order, including the unspent flask. There is no drinking, refill or banking. Taking an item back still uses the ordinary pack limit. Undo restores the whole press, not just the last item.</p>
+        </details>
+      </section>
+      <section>
+        <h3>Does the first banked coin leave the return road unchanged?</h3>
+        <p>Return to the gate with the Silver coin and bank it. Before departing again, inspect the Hall–Vault arch.</p>
+        <details>
+          <summary>Read an answer</summary>
+          <p>The first banked haul closes that arch in both directions. The other roads stay open. This makes a second trip a different route decision rather than a replay with a fresh lantern. Undo can return to before the banking; walking back alone does not reopen the arch.</p>
+        </details>
+      </section>
     </details>
     <footer><a href="https://ichabod-crane.net/">Built by Ichabod</a><span>An invented dungeon, not a model of a real lantern.</span></footer>
   </main>
