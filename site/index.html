@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=treasure-places1">
-  <script type="module" src="/app.mjs?v=treasure-places1"></script>
+  <link rel="stylesheet" href="/style.css?v=arch-start1">
+  <script type="module" src="/app.mjs?v=arch-start1"></script>
 </head>
 <body>
   <main>
@@ -50,6 +50,14 @@
             <option value="split-vault">The ruby beside the coin</option>
           </select>
           <p id="treasure-places-help">Move the heavy idol near the gate, or bring the ruby into the Hall. Choosing starts a new attempt; item weights, values and roads do not change.</p>
+        </div>
+        <div>
+          <label for="arch-start">Starting arch</label>
+          <select id="arch-start" aria-describedby="arch-start-help">
+            <option value="standing" selected>Arch still standing</option>
+            <option value="fallen">Arch already fallen</option>
+          </select>
+          <p id="arch-start-help">Begin with the short arch already fallen. The Well road, treasures, fuel and prices stay the same. Choosing starts a new attempt; no haul is counted as banked.</p>
         </div>
       </div>
     </details>

@@ -25,8 +25,9 @@ const weightOf = id => items.find(item => item.id === id)?.weight ?? 0;
 const valueOf = ids => ids.reduce((total, id) => total + (items.find(item => item.id === id)?.value ?? 0), 0);
 const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 
-export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', treasurePlaces = 'usual' } = {}) {
+export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', treasurePlaces = 'usual', archStart = 'standing' } = {}) {
   const startingFuel = [8, 12, 20].includes(fuel) ? fuel : 20;
+  const startingArch = archStart === 'fallen' ? 'fallen' : 'standing';
   const dryWell = wellSupply === 'dry';
   const placement = treasurePlaces === 'near-idol' || treasurePlaces === 'split-vault' ? treasurePlaces : 'usual';
   const ground = placement === 'near-idol'
@@ -46,6 +47,7 @@ export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', trea
     trips: 0,
     status: 'playing',
     ...(passage === 'narrow' ? { passage: 'narrow' } : {}),
+    ...(startingArch === 'fallen' ? { archStart: 'fallen' } : {}),
   };
 }
 
@@ -62,7 +64,7 @@ export function act(state, action) {
     case 'move': {
       const edge = edges.find(([a, b]) => (a === state.room && b === action.id) || (b === state.room && a === action.id));
       if (!edge || (edge[0] === 'hall' && edge[1] === 'vault'
-        && (state.trips >= 1 || (state.passage === 'narrow' && packWeight(state.pack) > 3)))) return state;
+        && (state.trips >= 1 || state.archStart === 'fallen' || (state.passage === 'narrow' && packWeight(state.pack) > 3)))) return state;
       const cost = edge[2] * (packWeight(state.pack) > 3 ? 2 : 1);
       if (state.fuel < cost) return state;
       next.room = action.id;

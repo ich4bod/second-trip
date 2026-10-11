@@ -1,10 +1,11 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=treasure-places1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=arch-start1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
 let wellSupply = 'flask';
 let treasurePlaces = 'usual';
-let state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces });
+let archStart = 'standing';
+let state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces, archStart });
 let kept = null;
 const history = [];
 let exchangeDrop = null;
@@ -15,12 +16,15 @@ const ended = () => state.status !== 'playing';
 const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
 const attemptWellSupply = attempt => attempt?.wellSupply === 'dry' ? 'dry' : 'flask';
 const attemptTreasurePlaces = attempt => ['near-idol', 'split-vault'].includes(attempt?.treasurePlaces) ? attempt.treasurePlaces : 'usual';
+const attemptArchStart = attempt => attempt?.archStart === 'fallen' ? 'fallen' : 'standing';
+const archClosed = attempt => attempt.trips >= 1 || attempt.archStart === 'fallen';
 const isKeptAttempt = () => !!kept
   && JSON.stringify(state) === JSON.stringify(kept.state)
   && startingFuel === kept.startingFuel
   && passageMode === keptPassage(kept)
   && wellSupply === attemptWellSupply(kept.state)
-  && treasurePlaces === attemptTreasurePlaces(kept.state);
+  && treasurePlaces === attemptTreasurePlaces(kept.state)
+  && archStart === attemptArchStart(kept.state);
 const canExchange = (current, dropId, takeId) => {
   const drop = itemById[dropId];
   const take = itemById[takeId];
@@ -35,7 +39,7 @@ const returnRoute = (current, weight = packWeight(current.pack)) => {
     gate: { rooms: ['gate'], baseCost: 0 },
     hall: { rooms: ['hall', 'gate'], baseCost: 1 },
     well: { rooms: ['well', 'hall', 'gate'], baseCost: 2 },
-    vault: current.trips >= 1 || (current.passage === 'narrow' && weight > 3)
+    vault: archClosed(current) || (current.passage === 'narrow' && weight > 3)
       ? { rooms: ['vault', 'well', 'hall', 'gate'], baseCost: 4 }
       : { rooms: ['vault', 'hall', 'gate'], baseCost: 2 },
   };
@@ -109,9 +113,11 @@ function render() {
   byId('flask-help').textContent = 'The flask takes two weight. Use it here or bank it at the gate to add eight fuel, up to twenty. It is spent once; it is not treasure.';
   byId('banked-value').textContent = `Safe at the gate: ${valueOf(state.banked)} treasure value.`;
   byId('trips').textContent = `Banked hauls: ${state.trips}.`;
-  byId('passage-note').textContent = passageMode === 'narrow'
-    ? 'The low lintel accepts at most three pack weight.'
-    : 'The standing arch accepts any legal pack.';
+  byId('passage-note').textContent = archClosed(state)
+    ? 'The arch is already fallen; pack width no longer changes that road.'
+    : passageMode === 'narrow'
+      ? 'The low lintel accepts at most three pack weight.'
+      : 'The standing arch accepts any legal pack.';
   const currentWellSupply = attemptWellSupply(state);
   byId('well-supply').value = currentWellSupply;
   byId('well-supply-note').textContent = currentWellSupply === 'dry'
@@ -120,10 +126,10 @@ function render() {
   const currentTreasurePlaces = attemptTreasurePlaces(state);
   byId('treasure-places').value = currentTreasurePlaces;
   document.querySelector('[data-edge="hall-vault"]').classList.toggle('narrow', passageMode === 'narrow');
-  byId('arch-note').textContent = state.trips === 0
-    ? 'The short arch stands until you bank your first haul.'
-    : 'The short arch has fallen. The Well road is still open.';
-  document.querySelector('[data-edge="hall-vault"]').classList.toggle('closed', state.trips >= 1);
+  byId('arch-note').textContent = archClosed(state)
+    ? 'The short arch has fallen. The Well road is still open.'
+    : 'The short arch stands until you bank your first haul.';
+  document.querySelector('[data-edge="hall-vault"]').classList.toggle('closed', archClosed(state));
   byId('result').textContent = state.status === 'stranded'
     ? 'The lantern went out away from the gate. Only banked treasure is safe. Undo a choice or start again.'
     : state.status === 'left'
@@ -155,10 +161,10 @@ function render() {
     const destination = a === state.room ? b : b === state.room ? a : null;
     if (!destination) continue;
     const isArch = a === 'hall' && b === 'vault';
-    const archClosed = state.trips >= 1 && isArch;
+    const archBlocked = archClosed(state) && isArch;
     const packBlocked = state.passage === 'narrow' && weight > 3 && isArch;
     const cost = baseCost * (weight > 3 ? 2 : 1);
-    const roadText = archClosed ? `To ${names[destination]} · arch closed`
+    const roadText = archBlocked ? `To ${names[destination]} · arch closed`
       : packBlocked ? `To ${names[destination]} · pack too heavy`
         : `To ${names[destination]} · ${cost} fuel`;
     const action = { type: 'move', id: destination };
@@ -225,7 +231,7 @@ function render() {
     bankPreview.id = `bank-item-preview-${id}`;
     bankPreview.hidden = bankCandidate === state;
     if (bankCandidate !== state) {
-      bankPreview.textContent = `After banking ${itemById[id].name}: safe ${valueOf(bankCandidate.banked)} · pack ${packWeight(bankCandidate.pack)} / ${capacity} · lantern ${bankCandidate.fuel} / 20 · arch ${bankCandidate.trips >= 1 ? 'fallen' : 'standing'}.`;
+      bankPreview.textContent = `After banking ${itemById[id].name}: safe ${valueOf(bankCandidate.banked)} · pack ${packWeight(bankCandidate.pack)} / ${capacity} · lantern ${bankCandidate.fuel} / 20 · arch ${archClosed(bankCandidate) ? 'fallen' : 'standing'}.`;
     }
     row.append(bankPreview);
     const hypotheticalWeight = weight - itemById[id].weight;
@@ -263,7 +269,7 @@ function render() {
   returnButton.disabled = !kept || isKeptAttempt();
   forgetButton.disabled = !kept;
   keptInfo.textContent = kept
-    ? `Kept: ${names[kept.state.room]} · ${kept.state.fuel} fuel · ${packWeight(kept.state.pack)} weight · ${valueOf(kept.state.banked)} safe value · arch ${kept.state.trips >= 1 ? 'fallen' : 'standing'}.`
+    ? `Kept: ${names[kept.state.room]} · ${kept.state.fuel} fuel · ${packWeight(kept.state.pack)} weight · ${valueOf(kept.state.banked)} safe value · arch ${archClosed(kept.state) ? 'fallen' : 'standing'}.`
     : 'No attempt kept.';
   const keptSupplyNote = byId('trip-kept-supply');
   keptSupplyNote.hidden = !kept;
@@ -295,7 +301,7 @@ byId('undo').addEventListener('click', () => {
   }
 });
 const restart = () => {
-  state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces });
+  state = create({ fuel: startingFuel, passage: passageMode, wellSupply, treasurePlaces, archStart });
   exchangeDrop = null;
   history.length = 0;
   render();
@@ -318,6 +324,10 @@ byId('treasure-places').addEventListener('change', () => {
   treasurePlaces = ['near-idol', 'split-vault'].includes(selected) ? selected : 'usual';
   restart();
 });
+byId('arch-start').addEventListener('change', () => {
+  archStart = byId('arch-start').value === 'fallen' ? 'fallen' : 'standing';
+  restart();
+});
 byId('restart').addEventListener('click', restart);
 byId('trip-keep').addEventListener('click', () => {
   kept = { state: structuredClone(state), startingFuel };
@@ -330,10 +340,12 @@ byId('trip-return').addEventListener('click', () => {
   passageMode = keptPassage(kept);
   wellSupply = attemptWellSupply(kept.state);
   treasurePlaces = attemptTreasurePlaces(kept.state);
+  archStart = attemptArchStart(kept.state);
   byId('starting-fuel').value = String(startingFuel);
   byId('passage-mode').value = passageMode;
   byId('well-supply').value = wellSupply;
   byId('treasure-places').value = treasurePlaces;
+  byId('arch-start').value = archStart;
   exchangeDrop = null;
   history.length = 0;
   render();
