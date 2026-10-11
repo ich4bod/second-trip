@@ -1,4 +1,4 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=shortlantern1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=dropall1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -252,6 +252,7 @@ function render() {
     pack.append(row);
   }
 
+  byId('drop-whole-pack').disabled = ended() || state.pack.length === 0;
   byId('unload-treasure').disabled = ended() || !state.pack.some(id => id !== 'flask');
   byId('bank').disabled = ended() || state.room !== 'gate' || state.pack.length === 0;
   byId('leave').disabled = ended() || state.room !== 'gate';
@@ -291,6 +292,7 @@ byId('homeward-step').addEventListener('click', () => {
   if (!homeward.allowed) return;
   save(act(state, homeward.action));
 });
+byId('drop-whole-pack').addEventListener('click', () => save(act(state, { type: 'drop-all' })));
 byId('unload-treasure').addEventListener('click', () => save(act(state, { type: 'unload' })));
 byId('bank').addEventListener('click', () => save(act(state, { type: 'bank' })));
 byId('leave').addEventListener('click', () => save(act(state, { type: 'leave' })));

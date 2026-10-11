@@ -58,6 +58,7 @@ function clone(state) {
 export function act(state, action) {
   if (!state || state.status !== 'playing' || !action) return state;
   if (action.type === 'unload' && !state.pack.some(id => id !== 'flask')) return state;
+  if (action.type === 'drop-all' && state.pack.length === 0) return state;
   if (action.type === 'drink' && (!state.pack.includes('flask') || state.fuel >= 20)) return state;
   const next = clone(state);
   switch (action.type) {
@@ -92,6 +93,11 @@ export function act(state, action) {
     case 'unload': {
       next.ground[state.room].push(...state.pack.filter(id => id !== 'flask'));
       next.pack = state.pack.filter(id => id === 'flask');
+      return next;
+    }
+    case 'drop-all': {
+      next.ground[state.room].push(...state.pack);
+      next.pack = [];
       return next;
     }
     case 'bank-one': {

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
-  <link rel="stylesheet" href="/style.css?v=arch-start1">
-  <script type="module" src="/app.mjs?v=shortlantern1"></script>
+  <link rel="stylesheet" href="/style.css?v=dropall1">
+  <script type="module" src="/app.mjs?v=dropall1"></script>
 </head>
 <body>
   <main>
@@ -127,6 +127,8 @@
         </section>
         <section class="card" aria-labelledby="pack-heading">
           <h2 id="pack-heading">In your pack</h2>
+          <button id="drop-whole-pack" type="button" aria-describedby="drop-whole-pack-help">Put the whole pack down</button>
+          <p id="drop-whole-pack-help">Put every carried item on this floor, including an unspent flask. No fuel or treasure is banked. Taking things back still uses the ordinary pack limit; Undo restores the whole press.</p>
           <div id="pack"></div>
           <button id="unload-treasure" type="button" aria-describedby="unload-help">Unload treasure here</button>
           <details id="pack-instructions">
