@@ -23,6 +23,7 @@ button { cursor: pointer; }
 #exchange-drop, #starting-fuel, #passage-mode, #well-supply, #treasure-places, #arch-start { display: block; width: 100%; margin: 4px 0 8px; }
 #drop-whole-pack { margin: 4px 0; }
 #drop-whole-pack-help { color: #b7b3a9; }
+#treasure-approach-help { max-width: 100%; color: #b7b3a9; }
 #use-flask-weight-preview, #use-flask-weight-help { font: 16px/1.5 system-ui, sans-serif; max-width: 100%; margin: 8px 0; }
 #use-flask-weight-help { color: #b7b3a9; }
 select:focus-visible { outline: 3px solid #e7b455; outline-offset: 3px; }

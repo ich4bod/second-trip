@@ -29,12 +29,16 @@ export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', trea
   const startingFuel = [6, 8, 12, 16, 20].includes(fuel) ? fuel : 20;
   const startingArch = archStart === 'fallen' ? 'fallen' : 'standing';
   const dryWell = wellSupply === 'dry';
-  const placement = treasurePlaces === 'near-idol' || treasurePlaces === 'split-vault' ? treasurePlaces : 'usual';
+  const placement = ['near-idol', 'split-vault', 'well-idol', 'hall-cup'].includes(treasurePlaces) ? treasurePlaces : 'usual';
   const ground = placement === 'near-idol'
     ? { gate: [], hall: ['idol'], well: ['cup', 'flask'], vault: ['coin', 'ruby'] }
     : placement === 'split-vault'
       ? { gate: [], hall: ['coin', 'ruby'], well: ['cup', 'flask'], vault: ['idol'] }
-      : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
+      : placement === 'well-idol'
+        ? { gate: [], hall: ['coin'], well: ['idol', 'flask'], vault: ['cup', 'ruby'] }
+        : placement === 'hall-cup'
+          ? { gate: [], hall: ['cup'], well: ['coin', 'flask'], vault: ['idol', 'ruby'] }
+          : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
   if (dryWell) ground.well = ground.well.filter(id => id !== 'flask');
   return {
     room: 'gate',
