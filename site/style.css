@@ -24,6 +24,7 @@ button { cursor: pointer; }
 #drop-whole-pack { margin: 4px 0; }
 #drop-whole-pack-help { color: #b7b3a9; }
 #treasure-approach-help { max-width: 100%; color: #b7b3a9; }
+#early-flask-help { font: 16px/1.5 system-ui, sans-serif; margin: 8px 0; color: #b7b3a9; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 #treasure-small-approach-help { font: 16px/1.5 system-ui, sans-serif; color: #b7b3a9; margin: 8px 0; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 #use-flask-weight-preview, #use-flask-weight-help { font: 16px/1.5 system-ui, sans-serif; max-width: 100%; margin: 8px 0; }
 #use-flask-weight-help { color: #b7b3a9; }

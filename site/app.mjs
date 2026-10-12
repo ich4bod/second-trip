@@ -1,4 +1,4 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=smalltreasure1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=earlyflask1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -14,7 +14,7 @@ const names = Object.fromEntries(rooms.map(room => [room.id, room.name]));
 const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
 const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
-const attemptWellSupply = attempt => attempt?.wellSupply === 'dry' ? 'dry' : 'flask';
+const attemptWellSupply = attempt => ['dry', 'hall', 'gate'].includes(attempt?.wellSupply) ? attempt.wellSupply : 'flask';
 const attemptTreasurePlaces = attempt => ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup'].includes(attempt?.treasurePlaces) ? attempt.treasurePlaces : 'usual';
 const attemptArchStart = attempt => attempt?.archStart === 'fallen' ? 'fallen' : 'standing';
 const archClosed = attempt => attempt.trips >= 1 || attempt.archStart === 'fallen';
@@ -122,7 +122,11 @@ function render() {
   byId('well-supply').value = currentWellSupply;
   byId('well-supply-note').textContent = currentWellSupply === 'dry'
     ? 'Well: no fuel flask.'
-    : 'Well: one fuel flask.';
+    : currentWellSupply === 'hall'
+      ? 'Flask: one in the Hall.'
+      : currentWellSupply === 'gate'
+        ? 'Flask: one at the Gate.'
+        : 'Well: one fuel flask.';
   const currentTreasurePlaces = attemptTreasurePlaces(state);
   byId('treasure-places').value = currentTreasurePlaces;
   document.querySelector('[data-edge="hall-vault"]').classList.toggle('narrow', passageMode === 'narrow');
@@ -283,8 +287,11 @@ function render() {
     : 'No attempt kept.';
   const keptSupplyNote = byId('trip-kept-supply');
   keptSupplyNote.hidden = !kept;
+  const keptWellSupply = attemptWellSupply(kept?.state);
   keptSupplyNote.textContent = kept
-    ? `Kept Well: ${attemptWellSupply(kept.state) === 'dry' ? 'no fuel flask' : 'one fuel flask'}.`
+    ? keptWellSupply === 'dry' ? 'Kept Well: no fuel flask.'
+      : keptWellSupply === 'flask' ? 'Kept Well: one fuel flask.'
+        : `Kept supply: one flask in the ${keptWellSupply === 'hall' ? 'Hall' : 'Gate'}.`
     : '';
 }
 
@@ -327,7 +334,7 @@ byId('passage-mode').addEventListener('change', () => {
   restart();
 });
 byId('well-supply').addEventListener('change', () => {
-  wellSupply = byId('well-supply').value === 'dry' ? 'dry' : 'flask';
+  wellSupply = ['dry', 'hall', 'gate'].includes(byId('well-supply').value) ? byId('well-supply').value : 'flask';
   restart();
 });
 byId('treasure-places').addEventListener('change', () => {

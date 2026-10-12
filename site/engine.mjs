@@ -28,7 +28,8 @@ const packWeight = pack => pack.reduce((total, id) => total + weightOf(id), 0);
 export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', treasurePlaces = 'usual', archStart = 'standing' } = {}) {
   const startingFuel = [6, 8, 12, 16, 20].includes(fuel) ? fuel : 20;
   const startingArch = archStart === 'fallen' ? 'fallen' : 'standing';
-  const dryWell = wellSupply === 'dry';
+  const supply = ['flask', 'dry', 'hall', 'gate'].includes(wellSupply) ? wellSupply : 'flask';
+  const dryWell = supply === 'dry';
   const placement = ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup'].includes(treasurePlaces) ? treasurePlaces : 'usual';
   const ground = placement === 'near-idol'
     ? { gate: [], hall: ['idol'], well: ['cup', 'flask'], vault: ['coin', 'ruby'] }
@@ -46,12 +47,16 @@ export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', trea
                 ? { gate: ['cup'], hall: ['coin'], well: ['flask'], vault: ['idol', 'ruby'] }
                 : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
   if (dryWell) ground.well = ground.well.filter(id => id !== 'flask');
+  if (supply === 'hall' || supply === 'gate') {
+    for (const room of Object.keys(ground)) ground[room] = ground[room].filter(id => id !== 'flask');
+    ground[supply].push('flask');
+  }
   return {
     room: 'gate',
     fuel: startingFuel,
     pack: [],
     ground,
-    ...(dryWell ? { wellSupply: 'dry' } : {}),
+    ...(supply !== 'flask' ? { wellSupply: supply } : {}),
     ...(placement !== 'usual' ? { treasurePlaces: placement } : {}),
     banked: [],
     trips: 0,
