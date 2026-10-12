@@ -1,0 +1,10 @@
+{
+  "group": "Small treasure before the first haul",
+  "helpID": "treasure-small-approach-help",
+  "help": "The ruby can wait beside the flask or in the Hall, or the cup can already be at the Gate. Treasure only becomes safe when banked; banking that first small haul still closes the arch. The flask stays in the Well unless you choose another supply.",
+  "rows": [
+    ["well-ruby", "The ruby beside the flask", {"gate": [], "hall": ["coin"], "well": ["ruby", "flask"], "vault": ["cup", "idol"]}],
+    ["hall-ruby", "The ruby in the Hall", {"gate": [], "hall": ["ruby"], "well": ["cup", "flask"], "vault": ["coin", "idol"]}],
+    ["gate-cup", "A cup already at the Gate", {"gate": ["cup"], "hall": ["coin"], "well": ["flask"], "vault": ["idol", "ruby"]}]
+  ]
+}
