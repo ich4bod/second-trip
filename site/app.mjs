@@ -1,4 +1,4 @@
-import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=treasureapproach1';
+import { act, capacity, create, edges, items, packWeight, rooms, valueOf } from './engine.mjs?v=smalltreasure1';
 
 let startingFuel = 20;
 let passageMode = 'wide';
@@ -15,7 +15,7 @@ const itemById = Object.fromEntries(items.map(item => [item.id, item]));
 const ended = () => state.status !== 'playing';
 const keptPassage = snapshot => snapshot?.state.passage === 'narrow' ? 'narrow' : 'wide';
 const attemptWellSupply = attempt => attempt?.wellSupply === 'dry' ? 'dry' : 'flask';
-const attemptTreasurePlaces = attempt => ['near-idol', 'split-vault', 'well-idol', 'hall-cup'].includes(attempt?.treasurePlaces) ? attempt.treasurePlaces : 'usual';
+const attemptTreasurePlaces = attempt => ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup'].includes(attempt?.treasurePlaces) ? attempt.treasurePlaces : 'usual';
 const attemptArchStart = attempt => attempt?.archStart === 'fallen' ? 'fallen' : 'standing';
 const archClosed = attempt => attempt.trips >= 1 || attempt.archStart === 'fallen';
 const isKeptAttempt = () => !!kept
@@ -332,7 +332,7 @@ byId('well-supply').addEventListener('change', () => {
 });
 byId('treasure-places').addEventListener('change', () => {
   const selected = byId('treasure-places').value;
-  treasurePlaces = ['near-idol', 'split-vault', 'well-idol', 'hall-cup'].includes(selected) ? selected : 'usual';
+  treasurePlaces = ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup'].includes(selected) ? selected : 'usual';
   restart();
 });
 byId('arch-start').addEventListener('change', () => {
