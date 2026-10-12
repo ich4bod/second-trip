@@ -1,0 +1,68 @@
+{
+  "slug": "second-trip",
+  "lane": 15,
+  "title": "Second Trip \u2014 Ask why a worthless flask can cost a valuable road",
+  "id": "three-questions-second-trip",
+  "summary": "Questions before the second trip",
+  "lead": "Nothing burns while you read. Fuel is spent on roads, and treasure counts only when you bank it at the gate.",
+  "questions": [
+    {
+      "title": "Can an item with no treasure value make the walk dearer?",
+      "prompt": "Carry the Silver coin and Fuel flask: together they weigh three. Add the Copper cup, then inspect a road before taking it.",
+      "answer": "Yes. The coin weighs one, the flask two and the cup two. The pack rises from three to five weight. Above three, every road costs double; the flask has zero treasure value but still has weight. The pack limit is six."
+    },
+    {
+      "title": "Does putting the flask down use its fuel?",
+      "prompt": "With a flask in the pack, press Put the whole pack down. Compare the lantern with the new floor items, then use Undo.",
+      "answer": "No. The whole pack moves to the current floor in order, including the unspent flask. There is no drinking, refill or banking. Taking an item back still uses the ordinary pack limit. Undo restores the whole press, not just the last item."
+    },
+    {
+      "title": "Does the first banked coin leave the return road unchanged?",
+      "prompt": "Return to the gate with the Silver coin and bank it. Before departing again, inspect the Hall\u2013Vault arch.",
+      "answer": "The first banked haul closes that arch in both directions. The other roads stay open. This makes a second trip a different route decision rather than a replay with a fresh lantern. Undo can return to before the banking; walking back alone does not reopen the arch."
+    },
+    {
+      "title": "Does meeting a flask earlier create another flask?",
+      "prompt": "Compare the Hall and Gate supply choices. Pick up the visible flask and inspect the other floors.",
+      "answer": "No. These choices relocate the same one flask. They do not put copies at several rooms. Changing where supply is met asks a route and pack question without changing the refill rule."
+    },
+    {
+      "title": "Can drinking waste offered fuel?",
+      "prompt": "With the flask in the pack and the lantern near full, inspect the Use preview before drinking.",
+      "answer": "The new fuel is capped at 20. The flask offers eight, but any part above that ceiling is lost rather than saved for later. The flask leaves the pack. Banking treasure neither raises that ceiling nor makes another flask."
+    },
+    {
+      "title": "Can carried treasure survive without being counted?",
+      "prompt": "Return to the gate with a treasure in the pack. Compare the carried items with the banked total before pressing Bank.",
+      "answer": "Carrying and banking are separate. Arrival alone does not add that treasure to the banked score. The Bank press transfers the carried treasure and can make the first haul close the arch; the walk to the gate does not perform that press for you."
+    }
+  ],
+  "facts": "Items coinweight1value1,flaskweight2value0,cupweight2value5; capacity6 costmultiplier2 ifpackWeight>3; bankingfirsthaul closesarch. drop-all preservesfuel andgroundorder. Fuelnotclock.",
+  "palette": "#171d26/#fff2d3/#b7b3a9/#e7b455",
+  "files": [
+    "site/index.html",
+    "site/style.css"
+  ],
+  "root": "main",
+  "anchor": "footer",
+  "url": "https://second-trip.ichabod-crane.net/",
+  "message": "six second-trip questions keep their answers optional and leave the experiment unchanged",
+  "oldSummary": "Try three questions before the second trip",
+  "appendQuestions": [
+    {
+      "title": "Does meeting a flask earlier create another flask?",
+      "prompt": "Compare the Hall and Gate supply choices. Pick up the visible flask and inspect the other floors.",
+      "answer": "No. These choices relocate the same one flask. They do not put copies at several rooms. Changing where supply is met asks a route and pack question without changing the refill rule."
+    },
+    {
+      "title": "Can drinking waste offered fuel?",
+      "prompt": "With the flask in the pack and the lantern near full, inspect the Use preview before drinking.",
+      "answer": "The new fuel is capped at 20. The flask offers eight, but any part above that ceiling is lost rather than saved for later. The flask leaves the pack. Banking treasure neither raises that ceiling nor makes another flask."
+    },
+    {
+      "title": "Can carried treasure survive without being counted?",
+      "prompt": "Return to the gate with a treasure in the pack. Compare the carried items with the banked total before pressing Bank.",
+      "answer": "Carrying and banking are separate. Arrival alone does not add that treasure to the banked score. The Bank press transfers the carried treasure and can make the first haul close the arch; the walk to the gate does not perform that press for you."
+    }
+  ]
+}
