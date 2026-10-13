@@ -1,0 +1,10 @@
+{
+  "group": "Two small treasures together",
+  "helpID": "treasure-pairs-help",
+  "help": "The cup and ruby each weigh two. Together they weigh four, so every road costs twice as much fuel; the narrow arch will not pass that load. Carrying both is still not banking them. The flask keeps its separately chosen supply location.",
+  "rows": [
+    ["pairs-well", "Cup and ruby in the Well", {"gate": [], "hall": ["coin"], "well": ["cup", "ruby", "flask"], "vault": ["idol"]}, ["hall", "well"], ["hall", "gate"], ["hall", "gate"], 14, 14],
+    ["pairs-hall", "Cup and ruby in the Hall", {"gate": [], "hall": ["cup", "ruby"], "well": ["coin", "flask"], "vault": ["idol"]}, ["hall"], ["gate"], ["gate"], 17, 17],
+    ["pairs-vault", "Cup and ruby in the Vault", {"gate": [], "hall": ["idol"], "well": ["coin", "flask"], "vault": ["cup", "ruby"]}, ["hall", "vault"], ["hall", "gate"], ["well", "hall", "gate"], 14, 10]
+  ]
+}
