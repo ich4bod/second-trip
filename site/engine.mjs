@@ -30,7 +30,7 @@ export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', trea
   const startingArch = archStart === 'fallen' ? 'fallen' : 'standing';
   const supply = ['flask', 'dry', 'hall', 'gate'].includes(wellSupply) ? wellSupply : 'flask';
   const dryWell = supply === 'dry';
-  const placement = ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup'].includes(treasurePlaces) ? treasurePlaces : 'usual';
+  const placement = ['near-idol', 'split-vault', 'well-idol', 'hall-cup', 'well-ruby', 'hall-ruby', 'gate-cup', 'pairs-well', 'pairs-hall', 'pairs-vault'].includes(treasurePlaces) ? treasurePlaces : 'usual';
   const ground = placement === 'near-idol'
     ? { gate: [], hall: ['idol'], well: ['cup', 'flask'], vault: ['coin', 'ruby'] }
     : placement === 'split-vault'
@@ -45,7 +45,13 @@ export function create({ fuel = 20, passage = 'wide', wellSupply = 'flask', trea
               ? { gate: [], hall: ['ruby'], well: ['cup', 'flask'], vault: ['coin', 'idol'] }
               : placement === 'gate-cup'
                 ? { gate: ['cup'], hall: ['coin'], well: ['flask'], vault: ['idol', 'ruby'] }
-                : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
+                : placement === 'pairs-well'
+                  ? { gate: [], hall: ['coin'], well: ['cup', 'ruby', 'flask'], vault: ['idol'] }
+                  : placement === 'pairs-hall'
+                    ? { gate: [], hall: ['cup', 'ruby'], well: ['coin', 'flask'], vault: ['idol'] }
+                    : placement === 'pairs-vault'
+                      ? { gate: [], hall: ['idol'], well: ['coin', 'flask'], vault: ['cup', 'ruby'] }
+                      : { gate: [], hall: ['coin'], well: ['cup', 'flask'], vault: ['idol', 'ruby'] };
   if (dryWell) ground.well = ground.well.filter(id => id !== 'flask');
   if (supply === 'hall' || supply === 'gate') {
     for (const room of Object.keys(ground)) ground[room] = ground[room].filter(id => id !== 'flask');

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#171d26">
   <title>Second Trip</title>
   <link rel="stylesheet" href="/style.css?v=earlyflask1">
-  <script type="module" src="/app.mjs?v=earlyflask1"></script>
+  <script type="module" src="/app.mjs?v=pairs1"></script>
 </head>
 <body>
   <main>
@@ -51,7 +51,7 @@
         </div>
         <div>
           <label for="treasure-places">Treasure places</label>
-          <select id="treasure-places" aria-describedby="treasure-places-help treasure-approach-help treasure-small-approach-help">
+          <select id="treasure-places" aria-describedby="treasure-places-help treasure-approach-help treasure-small-approach-help treasure-pairs-help">
             <option value="usual" selected>Original places</option>
             <option value="near-idol">The idol in the Hall</option>
             <option value="split-vault">The ruby beside the coin</option>
@@ -64,10 +64,16 @@
               <option value="hall-ruby">The ruby in the Hall</option>
               <option value="gate-cup">A cup already at the Gate</option>
             </optgroup>
+            <optgroup label="Two small treasures together">
+              <option value="pairs-well">Cup and ruby in the Well</option>
+              <option value="pairs-hall">Cup and ruby in the Hall</option>
+              <option value="pairs-vault">Cup and ruby in the Vault</option>
+            </optgroup>
           </select>
           <p id="treasure-places-help">Move the heavy idol near the gate, or bring the ruby into the Hall. Choosing starts a new attempt; item weights, values and roads do not change.</p>
           <p id="treasure-approach-help">The idol can wait beside the default Well flask, or the cup can be collected before reaching it. Only treasure places change with this picker; a separate supply choice can move the flask earlier. Weights, values, capacity and roads stay the same. Choosing starts a new attempt; Keep can hold the attempt you want to return to.</p>
           <p id="treasure-small-approach-help">The ruby can wait beside the flask or in the Hall, or the cup can already be at the Gate. Treasure only becomes safe when banked; banking that first small haul still closes the arch. The flask stays in the Well unless you choose another supply.</p>
+          <p id="treasure-pairs-help">The cup and ruby each weigh two. Together they weigh four, so every road costs twice as much fuel; the narrow arch will not pass that load. Carrying both is still not banking them. The flask keeps its separately chosen supply location.</p>
         </div>
         <div>
           <label for="arch-start">Starting arch</label>
