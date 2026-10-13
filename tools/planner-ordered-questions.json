@@ -1,0 +1,55 @@
+{
+  "id": "three-questions-second-trip",
+  "title": "Second Trip — Ask what a light item and a flask-only bank change",
+  "depends": "982",
+  "sections": [
+    [
+      "Can an item with no treasure value make the walk dearer?",
+      "Carry the Silver coin and Fuel flask: together they weigh three. Add the Copper cup, then inspect a road before taking it.",
+      "Yes. The coin weighs one, the flask two and the cup two. The pack rises from three to five weight. Above three, every road costs double; the flask has zero treasure value but still has weight. The pack limit is six."
+    ],
+    [
+      "Does putting the flask down use its fuel?",
+      "With a flask in the pack, press Put the whole pack down. Compare the lantern with the new floor items, then use Undo.",
+      "No. The whole pack moves to the current floor in order, including the unspent flask. There is no drinking, refill or banking. Taking an item back still uses the ordinary pack limit. Undo restores the whole press, not just the last item."
+    ],
+    [
+      "Does the first banked coin leave the return road unchanged?",
+      "Return to the gate with the Silver coin and bank it. Before departing again, inspect the Hall–Vault arch.",
+      "The first banked haul closes that arch in both directions. The other roads stay open. This makes a second trip a different route decision rather than a replay with a fresh lantern. Undo can return to before the banking; walking back alone does not reopen the arch."
+    ],
+    [
+      "Does meeting a flask earlier create another flask?",
+      "Compare the Hall and Gate supply choices. Pick up the visible flask and inspect the other floors.",
+      "No. These choices relocate the same one flask. They do not put copies at several rooms. Changing where supply is met asks a route and pack question without changing the refill rule."
+    ],
+    [
+      "Can drinking waste offered fuel?",
+      "With the flask in the pack and the lantern near full, inspect the Use preview before drinking.",
+      "The new fuel is capped at 20. The flask offers eight, but any part above that ceiling is lost rather than saved for later. The flask leaves the pack. Banking treasure neither raises that ceiling nor makes another flask."
+    ],
+    [
+      "Can carried treasure survive without being counted?",
+      "Return to the gate with a treasure in the pack. Compare the carried items with the banked total before pressing Bank.",
+      "Carrying and banking are separate. Arrival alone does not add that treasure to the banked score. The Bank press transfers the carried treasure and can make the first haul close the arch; the walk to the gate does not perform that press for you."
+    ],
+    [
+      "Do two light treasures make a light pack?",
+      "Start with Cup and ruby in the Hall. Compare taking either item with carrying both before choosing a road.",
+      "Each weighs two. Together they weigh four, above the light-load threshold of three, so every subsequent road costs twice its printed fuel price while that pack stays heavy. This weight rule is separate from whether the short arch has fallen."
+    ],
+    [
+      "Does walking through the Well empty the pack?",
+      "Carry an item into the Well and inspect your pack before taking anything from the floor.",
+      "No. The Well is a room, not a pack reset or an automatic refill. Carried items stay carried until an explicit drop, trade, drink or bank changes them. A flask on the floor does nothing merely because you walk past it."
+    ],
+    [
+      "Does banking only a flask leave the arch standing?",
+      "Choose One flask at the Gate. Take it and inspect what banking that item promises before pressing a bank button.",
+      "No. Banking the flask consumes it for up to eight fuel, capped at twenty, and counts as a banked haul even though it adds no treasure value. The first banked haul closes the short arch. A fuel decision can therefore change the second trip without putting treasure in the bank."
+    ]
+  ],
+  "summary": "Questions before the second trip",
+  "lead": "Nothing burns while you read. Fuel is spent on roads, and treasure counts only when you bank it at the gate.",
+  "slug": "second-trip"
+}
