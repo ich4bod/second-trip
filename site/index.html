@@ -14,77 +14,6 @@
       <h1>Second Trip</h1>
       <p class="deck">Treasure is only safe at the gate. A heavy pack burns twice the fuel on every road.</p>
     </header>
-    <details id="trip-starting-choices">
-      <summary>Start a different expedition</summary>
-      <div class="starting-choice-fields">
-        <div>
-          <label for="starting-fuel">Starting lantern</label>
-          <select id="starting-fuel" aria-describedby="starting-fuel-help">
-            <option value="6">6 fuel</option>
-            <option value="8">8 fuel</option>
-            <option value="12">12 fuel</option>
-            <option value="16">16 fuel</option>
-            <option value="20" selected>20 fuel</option>
-          </select>
-          <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
-        </div>
-        <div>
-          <label for="passage-mode">The short passage</label>
-          <select id="passage-mode" aria-describedby="passage-help">
-            <option value="wide" selected>Wide arch</option>
-            <option value="narrow">Low lintel</option>
-          </select>
-          <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
-        </div>
-        <div>
-          <label for="well-supply">Fuel flask</label>
-          <select id="well-supply" aria-describedby="well-supply-help early-flask-help">
-            <option value="flask" selected>One fuel flask</option>
-            <option value="dry">No fuel flask</option>
-            <optgroup label="Before the Well">
-              <option value="hall">One flask in the Hall</option>
-              <option value="gate">One flask at the Gate</option>
-            </optgroup>
-          </select>
-          <p id="well-supply-help">Start without the flask. Only the Well’s fuel supply changes; the treasure and roads stay the same.</p>
-          <p id="early-flask-help">The flask can wait in the Hall or at the Gate instead of the Well. Only its place changes: it still weighs two, adds up to eight fuel, and is not treasure. Choosing starts a new attempt; an early flask is not an automatic refill.</p>
-        </div>
-        <div>
-          <label for="treasure-places">Treasure places</label>
-          <select id="treasure-places" aria-describedby="treasure-places-help treasure-approach-help treasure-small-approach-help treasure-pairs-help">
-            <option value="usual" selected>Original places</option>
-            <option value="near-idol">The idol in the Hall</option>
-            <option value="split-vault">The ruby beside the coin</option>
-            <optgroup label="Treasure on the approach">
-              <option value="well-idol">The idol beside the flask</option>
-              <option value="hall-cup">The cup before the flask</option>
-            </optgroup>
-            <optgroup label="Small treasure before the first haul">
-              <option value="well-ruby">The ruby beside the flask</option>
-              <option value="hall-ruby">The ruby in the Hall</option>
-              <option value="gate-cup">A cup already at the Gate</option>
-            </optgroup>
-            <optgroup label="Two small treasures together">
-              <option value="pairs-well">Cup and ruby in the Well</option>
-              <option value="pairs-hall">Cup and ruby in the Hall</option>
-              <option value="pairs-vault">Cup and ruby in the Vault</option>
-            </optgroup>
-          </select>
-          <p id="treasure-places-help">Move the heavy idol near the gate, or bring the ruby into the Hall. Choosing starts a new attempt; item weights, values and roads do not change.</p>
-          <p id="treasure-approach-help">The idol can wait beside the default Well flask, or the cup can be collected before reaching it. Only treasure places change with this picker; a separate supply choice can move the flask earlier. Weights, values, capacity and roads stay the same. Choosing starts a new attempt; Keep can hold the attempt you want to return to.</p>
-          <p id="treasure-small-approach-help">The ruby can wait beside the flask or in the Hall, or the cup can already be at the Gate. Treasure only becomes safe when banked; banking that first small haul still closes the arch. The flask stays in the Well unless you choose another supply.</p>
-          <p id="treasure-pairs-help">The cup and ruby each weigh two. Together they weigh four, so every road costs twice as much fuel; the narrow arch will not pass that load. Carrying both is still not banking them. The flask keeps its separately chosen supply location.</p>
-        </div>
-        <div>
-          <label for="arch-start">Starting arch</label>
-          <select id="arch-start" aria-describedby="arch-start-help">
-            <option value="standing" selected>Arch still standing</option>
-            <option value="fallen">Arch already fallen</option>
-          </select>
-          <p id="arch-start-help">Begin with the short arch already fallen. The Well road, treasures, fuel and prices stay the same. Choosing starts a new attempt; no haul is counted as banked.</p>
-        </div>
-      </div>
-    </details>
     <section class="game" aria-label="Second Trip game">
       <div class="map-card card">
         <h2>The dungeon</h2>
@@ -186,6 +115,77 @@
         </details>
       </div>
     </section>
+    <details id="trip-starting-choices">
+      <summary>Start a different expedition</summary>
+      <div class="starting-choice-fields">
+        <div>
+          <label for="starting-fuel">Starting lantern</label>
+          <select id="starting-fuel" aria-describedby="starting-fuel-help">
+            <option value="6">6 fuel</option>
+            <option value="8">8 fuel</option>
+            <option value="12">12 fuel</option>
+            <option value="16">16 fuel</option>
+            <option value="20" selected>20 fuel</option>
+          </select>
+          <p id="starting-fuel-help">Changing the starting lantern begins a new game. Start again keeps this choice. A flask can still refill up to twenty fuel.</p>
+        </div>
+        <div>
+          <label for="passage-mode">The short passage</label>
+          <select id="passage-mode" aria-describedby="passage-help">
+            <option value="wide" selected>Wide arch</option>
+            <option value="narrow">Low lintel</option>
+          </select>
+          <p id="passage-help">The low lintel refuses a pack heavier than three. Go through the Well, or lighten the pack. Either arch still falls after the first banked haul.</p>
+        </div>
+        <div>
+          <label for="well-supply">Fuel flask</label>
+          <select id="well-supply" aria-describedby="well-supply-help early-flask-help">
+            <option value="flask" selected>One fuel flask</option>
+            <option value="dry">No fuel flask</option>
+            <optgroup label="Before the Well">
+              <option value="hall">One flask in the Hall</option>
+              <option value="gate">One flask at the Gate</option>
+            </optgroup>
+          </select>
+          <p id="well-supply-help">Start without the flask. Only the Well’s fuel supply changes; the treasure and roads stay the same.</p>
+          <p id="early-flask-help">The flask can wait in the Hall or at the Gate instead of the Well. Only its place changes: it still weighs two, adds up to eight fuel, and is not treasure. Choosing starts a new attempt; an early flask is not an automatic refill.</p>
+        </div>
+        <div>
+          <label for="treasure-places">Treasure places</label>
+          <select id="treasure-places" aria-describedby="treasure-places-help treasure-approach-help treasure-small-approach-help treasure-pairs-help">
+            <option value="usual" selected>Original places</option>
+            <option value="near-idol">The idol in the Hall</option>
+            <option value="split-vault">The ruby beside the coin</option>
+            <optgroup label="Treasure on the approach">
+              <option value="well-idol">The idol beside the flask</option>
+              <option value="hall-cup">The cup before the flask</option>
+            </optgroup>
+            <optgroup label="Small treasure before the first haul">
+              <option value="well-ruby">The ruby beside the flask</option>
+              <option value="hall-ruby">The ruby in the Hall</option>
+              <option value="gate-cup">A cup already at the Gate</option>
+            </optgroup>
+            <optgroup label="Two small treasures together">
+              <option value="pairs-well">Cup and ruby in the Well</option>
+              <option value="pairs-hall">Cup and ruby in the Hall</option>
+              <option value="pairs-vault">Cup and ruby in the Vault</option>
+            </optgroup>
+          </select>
+          <p id="treasure-places-help">Move the heavy idol near the gate, or bring the ruby into the Hall. Choosing starts a new attempt; item weights, values and roads do not change.</p>
+          <p id="treasure-approach-help">The idol can wait beside the default Well flask, or the cup can be collected before reaching it. Only treasure places change with this picker; a separate supply choice can move the flask earlier. Weights, values, capacity and roads stay the same. Choosing starts a new attempt; Keep can hold the attempt you want to return to.</p>
+          <p id="treasure-small-approach-help">The ruby can wait beside the flask or in the Hall, or the cup can already be at the Gate. Treasure only becomes safe when banked; banking that first small haul still closes the arch. The flask stays in the Well unless you choose another supply.</p>
+          <p id="treasure-pairs-help">The cup and ruby each weigh two. Together they weigh four, so every road costs twice as much fuel; the narrow arch will not pass that load. Carrying both is still not banking them. The flask keeps its separately chosen supply location.</p>
+        </div>
+        <div>
+          <label for="arch-start">Starting arch</label>
+          <select id="arch-start" aria-describedby="arch-start-help">
+            <option value="standing" selected>Arch still standing</option>
+            <option value="fallen">Arch already fallen</option>
+          </select>
+          <p id="arch-start-help">Begin with the short arch already fallen. The Well road, treasures, fuel and prices stay the same. Choosing starts a new attempt; no haul is counted as banked.</p>
+        </div>
+      </div>
+    </details>
     <details id="trip-guide">
       <summary>How this dungeon works</summary>
       <p class="rules" id="trip-rules-copy">Taking, dropping and banking cost no fuel. Roads do. You can carry at most six weight; above three, every road costs double. Fuel does not run on a clock. Banking your first haul closes the Hall–Vault arch in both directions. The other roads stay open. Undo can take you back before it fell.</p>
